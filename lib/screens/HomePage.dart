@@ -123,99 +123,87 @@ class _HomePageState extends State<HomePage> {
   void ontap(context){
     showModalBottomSheet(context: context, builder:(BuildContext bc){
       return SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height*.60,
-          child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),
-                      child: Align(
-                          alignment:Alignment.topLeft,
-                          child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
-                    ),
-                    Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:26),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('-Mask')),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:26),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('-Aarogya setu')),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:26),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text('-Covid test certificate')),
-                ),
-                Expanded(
-                  child: SearchBar<Post>(
-                    onSearch: search,
-                    onItemFound: (Post post, int index) {
-                      if(post.color==1){
-                        setState(() {
-                          final_color =Colors.red;
-                        });
-                      }
-                      if(post.color==2){
-                        setState(() {
-                          final_color =Colors.orangeAccent;
-                        });
-                      } if(post.color==3){
-                        setState(() {
-                          final_color =Colors.lightGreenAccent;
-                        });
-                      }
-
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(post.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
-                                    Text(post.intruction1,style: TextStyle(fontSize: 15),),
-                                    Text(post.intruction2,style: TextStyle(fontSize: 15),),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height*.60,
+            child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),
+                        child: Align(
+                            alignment:Alignment.topLeft,
+                            child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
+                      ),
+                      Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:26),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('-Mask')),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:26),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('-Aarogya setu')),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:26),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('-Covid test certificate')),
+                  ),
+                  Expanded(
+                    child: SearchBar<Post>(
+                      onSearch: search,
+                      onItemFound: (Post post, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(post.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                                      Text(post.intruction1,style: TextStyle(fontSize: 15),),
+                                      Text(post.intruction2,style: TextStyle(fontSize: 15),),
 
 
 
-                                  ],
-                                ),
-                                Container(
+                                    ],
+                                  ),
+                                  Container(
 
-                                  height: 25,
-                                    width: 25,
-                                    decoration: BoxDecoration(
-                                          color: post.color,
-                                        borderRadius: BorderRadius.all(Radius.circular(20))
-                                    ),
-                                )
-                              ],
+                                    height: 25,
+                                      width: 25,
+                                      decoration: BoxDecoration(
+                                            color: post.color,
+                                          borderRadius: BorderRadius.all(Radius.circular(20))
+                                      ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
 
-              ],
-            ),
+                ],
+              ),
 
+          ),
         ),
       );
     });
@@ -238,18 +226,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(Icons.logout,size:35),
-              color: Colors.white,
-              iconSize: 30,
-              onPressed: () async{
-                await _auth.signOut();
-                Navigator.pushReplacementNamed(context, LandingPage.id);
-              }),
-        ],
-      ),
         body: Stack(
           children: [
             GoogleMap(
@@ -262,20 +238,33 @@ class _HomePageState extends State<HomePage> {
               markers: _markers,
               onCameraMove: _onCameraMove,
             ),
-            Padding(
-              padding:EdgeInsets.all(16.0) ,
-              child: Align(
-                alignment: Alignment.topLeft ,
-                child: Column(
-                  children: [
-                    button(_onMapTypeButtonPressed, Icons.map),
-                    SizedBox(height: 16.0,),
-                    //button(_onAddMarkerButtonPressed(center1), Icons.add_location),
-                  ],
-                ),
+            Align(
+              alignment: Alignment.bottomLeft ,
+              child: Padding(
+                padding:EdgeInsets.only(top:700,left: 16) ,
+                child: Align(
+                  alignment: Alignment.bottomLeft ,
+                  child: Column(
+                    children: [
+                      button(_onMapTypeButtonPressed, Icons.map),
+                      SizedBox(height: 16,),
+                      FloatingActionButton(
+                        backgroundColor: Colors.blue,
+                        child: Icon(Icons.logout,size:35),
+                        onPressed: () async{
+                          await _auth.signOut();
+                          Navigator.pushReplacementNamed(context, LandingPage.id);
+                        }
 
+                      ),
+                      //button(_onAddMarkerButtonPressed(center1), Icons.add_location),
+                    ],
+                  ),
+
+                ),
               ),
             ),
+
 
           ],
 
