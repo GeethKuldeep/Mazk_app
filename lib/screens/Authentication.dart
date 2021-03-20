@@ -10,9 +10,6 @@ import '../LandingPage.dart';
 enum EmailSignInFormType { signIn, register }
 
 
-
-
-
 class EmailSigninPage extends StatefulWidget {
   @override
   _EmailSigninPageState createState() => _EmailSigninPageState();
@@ -33,7 +30,7 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
   String get _password => _passwordController.text;
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   final firestoreInstance = FirebaseFirestore.instance;
-  var color1 = const Color(0xffA99CF0);
+  var color1 = Colors.orange;
 
   bool _passwordVisible;
   final snackBar = SnackBar(content: Text('Email is already registered'));
@@ -554,7 +551,7 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
         ),
       ),
 
-      backgroundColor: color2,
+      backgroundColor: Colors.orange,
     );
   }
 }

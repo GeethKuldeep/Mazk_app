@@ -1,3 +1,5 @@
+
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -26,8 +28,11 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+
 android {
     compileSdkVersion 30
+
+
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -52,9 +57,12 @@ android {
     }
 }
 
+
 flutter {
     source '../..'
 }
+
+
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

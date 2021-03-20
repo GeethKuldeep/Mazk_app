@@ -3,6 +3,11 @@
    <application
         android:label="vibranium"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data
+           android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyAv0eb6JcKnFAKoO_jvoEZdrDNu508tB6E" />
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

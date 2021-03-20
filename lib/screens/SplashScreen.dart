@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 builder: (context) => LandingPage())));
     print('timer done');
   }
-  var color1 =  Color(0xffA99CF0);
+  var color1 =  Colors.orange;
 
   @override
   Widget build(BuildContext context) {
