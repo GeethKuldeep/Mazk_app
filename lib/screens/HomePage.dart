@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../LandingPage.dart';
 
 class HomePage extends StatefulWidget {
   static const String id ='Home_Page';
-  static const LatLng _center = const LatLng(27.2046, 77.4977);
+
+
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,9 +21,25 @@ class _HomePageState extends State<HomePage> {
 
   final Set<Marker> _markers = {};
 
-  LatLng _lastMapPosition =HomePage._center;
-
+  LatLng _lastMapPosition =center;
   MapType _currentMapType = MapType.normal;
+  //static LatLng _initialPosition;
+  static LatLng center = const LatLng(16.9685574, 82.24632070000001);
+@override
+  void initState() {
+  _getUserLocation();
+    super.initState();
+  }
+
+  void _getUserLocation() async {
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      center = LatLng(position.latitude, position.longitude);
+      print("hello");
+      print('${center}');
+      print("hello1");
+    });
+  }
 
   _onMapCreated(GoogleMapController controller){
     _controller.complete(controller);
@@ -86,7 +103,7 @@ class _HomePageState extends State<HomePage> {
             GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
-                target: HomePage._center,
+                target: center,
                 zoom: 11.0,
               ),
               mapType: _currentMapType,

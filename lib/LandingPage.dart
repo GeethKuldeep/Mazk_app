@@ -16,9 +16,9 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final auth1 =FirebaseAuth.instance;
   User user1;
-  void authCurrentUser()async{
-    setState(() async{
-      user1 = await auth1.currentUser;
+  void authCurrentUser(){
+    setState(() {
+      user1 = auth1.currentUser;
     });
   }
   @override
