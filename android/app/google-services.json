@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "758359603082",
+    "project_id": "vibranium-a5678",
+    "storage_bucket": "vibranium-a5678.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758359603082:android:9d95bfd3c5ecdbe7573a73",
+        "android_client_info": {
+          "package_name": "com.example.vibranium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758359603082-e4ul3kj29p41tnen90pdvifhlembomh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyQw0QuCPWBLHP7O0vfw-mULAifX1xYe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758359603082-e4ul3kj29p41tnen90pdvifhlembomh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
