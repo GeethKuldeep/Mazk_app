@@ -33,6 +33,7 @@ dependencies:
   firebase_core:
   google_maps_flutter: ^0.5.11
   geolocator: ^5.1.5
+  flappy_search_bar: 1.4.1
 
 dev_dependencies:
   flutter_test:
