@@ -8,26 +8,37 @@ import '../LandingPage.dart';
 class HomePage extends StatefulWidget {
   static const String id ='Home_Page';
 
-
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+
   final _auth = FirebaseAuth.instance;
-
   Completer<GoogleMapController>_controller = Completer();
-
   final Set<Marker> _markers = {};
-
   LatLng _lastMapPosition =center;
   MapType _currentMapType = MapType.normal;
-  //static LatLng _initialPosition;
   static LatLng center = const LatLng(16.9685574, 82.24632070000001);
-@override
+  static LatLng center1 = const LatLng(16.998600, 82.243592);
+  static LatLng center2 = const LatLng(16.973475,82.237144);
+  static LatLng center3 = const LatLng(16.960680,82.235901);
+
+
+  String currentlocation="Current Location";
+  String name_place="Geeth's House";
+
+  @override
   void initState() {
   _getUserLocation();
+  _onAddMarkerButtonPressed(center,currentlocation,name_place);
+  _onAddMarkerButtonPressed(center1,"SRMT mall","Open");
+  _onAddMarkerButtonPressed(center2,"Dominos","Open");
+  _onAddMarkerButtonPressed(center3,"Appllo hospital","Open");
+
+
+
     super.initState();
   }
 
@@ -62,23 +73,25 @@ class _HomePageState extends State<HomePage> {
 
   _onMapTypeButtonPressed(){
     setState(() {
-      _currentMapType = _currentMapType==MapType.normal?MapType.satellite:MapType.normal;
+      _currentMapType = _currentMapType==MapType.normal?MapType.hybrid:MapType.normal;
 
     });
   }
-  _onAddMarkerButtonPressed(){
+
+  _onAddMarkerButtonPressed(LatLng newposition,String title,String snippet){
     setState(() {
       _markers.add(
           Marker(
-              markerId: MarkerId(_lastMapPosition.toString()),
-              position: _lastMapPosition,
+              markerId: MarkerId(newposition.toString()),
+              position:newposition,
             infoWindow: InfoWindow(
-              title: 'My Current Location',
-              snippet: 'Geeth',
+              title: title,
+              snippet: snippet,
             ),
             icon: BitmapDescriptor.defaultMarker,
           )
       );
+      print(_markers);
 
     });
   }
@@ -118,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     button(_onMapTypeButtonPressed, Icons.map),
                     SizedBox(height: 16.0,),
-                    button(_onAddMarkerButtonPressed, Icons.add_location),
+                    //button(_onAddMarkerButtonPressed(center1), Icons.add_location),
                   ],
                 ),
 
