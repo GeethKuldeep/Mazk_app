@@ -33,7 +33,11 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
   String get _password => _passwordController.text;
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   final firestoreInstance = FirebaseFirestore.instance;
-  var color1 = Colors.orange;
+
+  var color1 = Color(0xff0050F5);
+  var color5 = Color(0xff7BA3F6);
+
+
 
   bool _passwordVisible;
   final snackBar = SnackBar(content: Text('Email is already registered'));
@@ -313,9 +317,9 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
               SizedBox(
                 height: 65,
               ),
-              Image.asset('images/2.png',scale: 0.7,),
+              Image.asset('images/1.png',scale: 0.7,),
               SizedBox(
-                height: 15,
+                height:45,
               ),
               Text("Just a step away",style: TextStyle(color:Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
               SizedBox(height: MediaQuery.of(context).size.width * 0.07,),
@@ -360,21 +364,21 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: color1,
+                                      color: color5,
                                       width: 2.0,
                                     ),
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: color1,
+                                      color: color5,
                                       width: 2.0,
                                     ),
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
                                   labelText: 'UserName',
                                   errorStyle: TextStyle(
-                                    color: color1,
+                                    color: color5,
                                   ),
                                 ),
                                 autocorrect: false,
@@ -578,7 +582,7 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                     ),
-                                    color: color1,
+                                    color: Colors.deepOrangeAccent,
                                     onPressed: () {
                                       if (_formkey.currentState.validate() == true) {
                                         _submit();
@@ -608,7 +612,7 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
         ),
       ),
 
-      backgroundColor: Colors.orange,
+      backgroundColor: color1,
     );
   }
 }

@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   bool pressed5 = false;
   Color final_color;
   final stream1 =FirebaseFirestore.instance.collection("Vendors").doc("ehQnQQYcm6tiU3MmqgtW").snapshots();
-  Map details={"Nike":["-Mask","-Asrogya setu",Colors.red,"50/100"],"Big Bazar":["-Mask","-Asrogya setu",Colors.orange,"35/75"],"Lalitha Jewellers":["-Mask","-Asrogya setu",Colors.lightGreenAccent,"50/150"],"Jack and Jones":["-Mask","-Asrogya setu",Colors.red,"25/45"],};
+  Map details={"Nike":["-Mask","-Aarogya setu",Colors.red,"50/100"],"Big Bazar":["-Mask","-Aarogya setu",Colors.orange,"35/75"],"Lalitha Jewellers":["-Mask","-Aarogya setu",Colors.lightGreenAccent,"50/150"],"Jack and Jones":["-Mask","-Aarogya setu",Colors.red,"25/45"],};
   String present_count ="";
   int _count_;
   Color hello;
@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                               alignment:Alignment.topLeft,
                               child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
                         ),
-                        Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
+                        //Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
                       ],
                     ),
                     Padding(

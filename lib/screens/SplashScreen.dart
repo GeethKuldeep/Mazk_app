@@ -25,7 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 builder: (context) => LandingPage())));
     print('timer done');
   }
-  var color1 =  Colors.orange;
+  var color1 =  Colors.deepOrangeAccent;
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +37,24 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children:[
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('images/splash.png')
+                  Stack(
+                    children: [
+                      SizedBox(
+                        width: 75,
+                          height: 75,
+                          child: Image.asset('images/D.png')),
+                      Image.asset('images/Ellipse 1.png')
+                    ],
+                  ),
+                  SizedBox(height: 15,),
+                  Text("Dormammu",style: TextStyle(fontWeight:FontWeight.bold,color: Colors.white,fontSize: 35),)
+
                 ],
               ),
+              SizedBox(height: 15,),
               CircularProgressIndicator(
                 valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
               ),
