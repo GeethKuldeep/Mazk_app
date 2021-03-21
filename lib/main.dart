@@ -1,6 +1,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vibranium/screens/DecideScreen.dart';
 import 'package:vibranium/screens/HomePage.dart';
 import 'package:vibranium/screens/SplashScreen.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
           initialRoute: SplashScreen.id ,
           routes:{
             LandingPage.id:(context)=> LandingPage(),
+            Decide.id:(context)=> Decide(),
             SplashScreen.id:(context)=>SplashScreen(),
             HomePage.id:(context)=> HomePage(),
           }

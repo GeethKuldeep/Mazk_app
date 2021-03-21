@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vibranium/screens/Authentication.dart';
+import 'package:vibranium/screens/DecideScreen.dart';
 import 'package:vibranium/screens/HomePage.dart';
 
 
@@ -40,7 +41,7 @@ class _LandingPageState extends State<LandingPage> {
                 user1.reload();
                 if( user1.emailVerified == true){
                   print('HomePage called 2');
-                  return HomePage();
+                  return Decide();
                 }
               }
 

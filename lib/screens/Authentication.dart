@@ -22,10 +22,13 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _UsernameController = TextEditingController();
+  final TextEditingController _typeController = TextEditingController();
   final FocusNode _UsernameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _typeFocusNode = FocusNode();
   final FocusNode _password1FocusNode = FocusNode();
   String get _Username => _UsernameController.text;
+  String get _type => _typeController.text;
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
@@ -153,7 +156,7 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
             'username': _Username,
             'email': _email,
             'ID' : authResult.user.uid,
-            'Groups':[],
+            'Type':_type,
           });
           Navigator.of(context)
               .pushReplacement(MaterialPageRoute(builder: (context) => LandingPage()));
@@ -244,6 +247,9 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
   }
 
   void _UsernameEditingComplete() {
+    FocusScope.of(context).requestFocus(_typeFocusNode);
+  }
+  void _typeEditingComplete() {
     FocusScope.of(context).requestFocus(_emailFocusNode);
   }
 
@@ -375,6 +381,57 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
                                 keyboardType: TextInputType.name,
                                 textInputAction: TextInputAction.next,
                                 onEditingComplete: _UsernameEditingComplete,
+                              ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.07,
+                            ),
+
+                            if (_formType == EmailSignInFormType.register)
+                              TextFormField(
+                                style: TextStyle(color: Colors.black),
+                                cursorColor: Colors.black,
+                                key: ValueKey("Type"),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Vendor or User?';
+                                  }
+                                  return null;
+                                },
+                                controller: _typeController,
+                                focusNode: _typeFocusNode,
+                                decoration: InputDecoration(
+                                  labelStyle: TextStyle(color: color1, fontSize: 13),
+                                  contentPadding: const EdgeInsets.all(8.0),
+                                  errorBorder: new OutlineInputBorder(
+                                    borderSide: new BorderSide(
+                                      color: color2,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: color1,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: color1,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  labelText: 'Vendor or User',
+                                  errorStyle: TextStyle(
+                                    color: color1,
+                                  ),
+                                ),
+                                autocorrect: false,
+                                keyboardType: TextInputType.name,
+                                textInputAction: TextInputAction.next,
+                                onEditingComplete: _typeEditingComplete,
                               ),
 
                             SizedBox(
