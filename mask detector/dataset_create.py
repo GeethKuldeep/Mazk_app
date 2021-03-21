@@ -7,7 +7,7 @@ import pickle
 directory = "dataset"
 catagories = ["with_mask","without_mask"]
 
-img_size = 300
+img_size = 100
 
 def create_data():
     training_data = []
