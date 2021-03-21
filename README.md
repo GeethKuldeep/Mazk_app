@@ -18,15 +18,16 @@ This hardware will be integrated with our app which will indicate which places a
 
 
 ## Screenshots
+### Design
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png" >
+### Mask Detection
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.png" width="1920">
+### App
 <p float="left">
-
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg" width="200">
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/3.jpeg" width="200">
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/4.jpeg" width="200">
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/5.jpeg" width="200">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/6.jpeg" width="200">
-
-
 </p>
+### Hardware
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/6.jpeg" width="200">
