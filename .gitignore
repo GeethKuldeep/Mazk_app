@@ -48,3 +48,4 @@ app.*.map.json
 # ML model based
 **/dataset
 **/model
+**/secrets
