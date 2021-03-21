@@ -12,15 +12,18 @@ pwm.start(5)
 pwm.ChangeDutyCycle(2)
 def cfa(y):
     return y/18 + 2
-while 1:
+def detect_hand():#returns the value of ir sensor
+    return GPIO.input(16)
+def get_Temperature():
     bus = SMBus(1)
     sensor = MLX90614(bus, address=0x5A)
     print "Ambient Temperature :", sensor.get_ambient()
     print "Object Temperature :", sensor.get_object_1()
     temp = sensor.get_object_1()
     bus.close()
+    return temp  
+def run_dispencer():
+    pwm2.ChangeDutyCycle(cfa(90))
+    time.sleep(1)
+    pwm2.ChangeDutyCycle(cfa(0))
 
-    if(GPIO.input(16)):
-        pwm2.ChangeDutyCycle(cfa(90))
-        time.sleep(1)
-        pwm2.ChangeDutyCycle(cfa(0))
