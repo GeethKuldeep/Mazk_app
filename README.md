@@ -21,11 +21,11 @@ This hardware will be integrated with our app which will indicate which places a
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png" >
 <p float="left">
 
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg" width="100">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/3.jpeg" width="100">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/4.jpeg" width="100">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/5.jpeg" width="100">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/6.jpeg" width="100">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.jpeg" width="100">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg" width="300">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/3.jpeg" width="300">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/4.jpeg" width="300">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/5.jpeg" width="300">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/6.jpeg" width="300">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.png" width="300">
 
 </p>
