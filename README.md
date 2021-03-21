@@ -19,7 +19,7 @@ This hardware will be integrated with our app which will indicate which places a
 
 ## Screenshots
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png" >
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.png" width="900">
+<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.png" width="1920">
 <p float="left">
 
 <img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg" width="200">
