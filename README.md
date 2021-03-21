@@ -17,4 +17,11 @@ This hardware will be integrated with our app which will indicate which places a
 - Embedded Systems
 
 
-## Screensots
+## Screenshots
+![Design](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png)
+![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg)
+![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/3.jpeg)
+![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/4.jpeg)
+![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/5.jpeg)
+![Hardware](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/6.jpeg)
+![ML](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.jpeg)
