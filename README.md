@@ -18,7 +18,7 @@ This hardware will be integrated with our app which will indicate which places a
 
 
 ## Screenshots
-![Design](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png)
+![Design](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png | width=100)
 ![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg)
 ![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/3.jpeg)
 ![App](https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/4.jpeg)
