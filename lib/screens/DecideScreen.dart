@@ -121,7 +121,7 @@ class _DecideState extends State<Decide> {
                     else{
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: const Text('Your not an Admin'),
+                          content: const Text('Your not an Client'),
                         ),
                       );
                     }
