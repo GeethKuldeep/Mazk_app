@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
             print("green");
           });
         }
-        if(_count_ >25 && _count_<50){
+        if(_count_ >25 && _count_<=50){
           setState(() {
             hello=Colors.orange;
             print("orange");
