@@ -202,11 +202,21 @@ class _HomePageState extends State<HomePage> {
             StreamBuilder(
                 stream: stream1,
                 builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
+
                   return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (BuildContext context,int index){
                         DocumentSnapshot user = snapshot.data.docs[index];
+                        if(user["Current_strength"] <= user["Total_strength"]*0.25 ){
+                            final_color=Colors.lightGreenAccent;
+                        }
+                        else if(user["Total_strength"]*0.25< user["Current_strength"]&& user["Current_strength"]<= user["Total_strength"]*0.75){
+                          final_color=Colors.orange;
+                        }
+                        else if(user["Total_strength"]*0.75< user["Current_strength"]&& user["Current_strength"]<= user["Total_strength"]){
+                          final_color=Colors.red;
+                        }
                         return Card(
                           child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -228,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                                   height: 25,
                                   width: 25,
                                   decoration: BoxDecoration(
-                                      color: Colors.green,
+                                      color: final_color,
                                       borderRadius: BorderRadius.all(Radius.circular(20))
                                        ),
                                      ),
