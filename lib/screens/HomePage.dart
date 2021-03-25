@@ -27,13 +27,13 @@ class _HomePageState extends State<HomePage> {
   static LatLng center1 = const LatLng(16.998600, 82.243592);
   static LatLng center2 = const LatLng(16.973475,82.237144);
   static LatLng center3 = const LatLng(16.960680,82.235901);
-   bool pressed1 = false;
+  bool pressed1 = false;
   bool pressed2 = false;
   bool pressed3 = false;
   bool pressed4 = false;
   bool pressed5 = false;
   Color final_color;
-  final stream1 =FirebaseFirestore.instance.collection("Vendors").snapshots();
+  var stream1 =FirebaseFirestore.instance.collection("Vendors").where("StoreName",isEqualTo:"KFC").snapshots();
   String present_count ="";
   int _count_;
   Color hello;
@@ -43,17 +43,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-  _getUserLocation();
-  print("Marker1 ${_markers}");
-  _onAddMarkerButtonPressed(center,currentlocation,name_place,pressed1,1);
-  print("Marker2 ${_markers}");
-  _onAddMarkerButtonPressed(center1,"SRMT mall","Open",pressed2,2);
-  print("Marker3 ${_markers}");
-  _onAddMarkerButtonPressed(center2,"Dominos","Open",pressed3,3);
-  print("Marker4 ${_markers}");
-  _onAddMarkerButtonPressed(center3,"Appllo hospital","Open",pressed4,4);
-  print("Marker5 ${_markers}");
-  refresh_count();
+    _getUserLocation();
+    print("Marker1 ${_markers}");
+    _onAddMarkerButtonPressed(center,currentlocation,name_place,pressed1,1);
+    print("Marker2 ${_markers}");
+    _onAddMarkerButtonPressed(center1,"SRMT mall","Open",pressed2,2);
+    print("Marker3 ${_markers}");
+    _onAddMarkerButtonPressed(center2,"Dominos","Open",pressed3,3);
+    print("Marker4 ${_markers}");
+    _onAddMarkerButtonPressed(center3,"Appllo hospital","Open",pressed4,4);
+    print("Marker5 ${_markers}");
+    refresh_count();
 
 
     super.initState();
@@ -102,20 +102,20 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _markers.add(
           Marker(
-              markerId: MarkerId(newposition.toString()),
-              position:newposition,
+            markerId: MarkerId(newposition.toString()),
+            position:newposition,
             infoWindow: InfoWindow(
-              title: title,
-              snippet: snippet,
-              onTap:(){
-                setState(() {
-                  refresh_count();
-                  pressed =true;
-                  print('Pressed${a} = ${pressed}');
-                  refresh_count();
-                  ontap(context);
-                });
-              }
+                title: title,
+                snippet: snippet,
+                onTap:(){
+                  setState(() {
+                    refresh_count();
+                    pressed =true;
+                    print('Pressed${a} = ${pressed}');
+                    refresh_count();
+                    ontap(context);
+                  });
+                }
             ),
             icon: BitmapDescriptor.defaultMarker,
           )
@@ -158,190 +158,225 @@ class _HomePageState extends State<HomePage> {
 
   void ontap(context){
     showModalBottomSheet(context: context, builder:(BuildContext bc){
-      return Container(
-        child:  Column(
-          children: [
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return SingleChildScrollView(
+        child: Container(
+          height: 450,
+            child:  Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),
-                  child: Align(
-                      alignment:Alignment.topLeft,
-                      child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
-                ),
-                //Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:26),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('-Mask')),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:26),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('-Aarogya setu')),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:26),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('-Covid test certificate')),
-            ),
-            SizedBox(height: 12,),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
-                    decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(24.0)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),
+                      child: Align(
+                          alignment:Alignment.topLeft,
+                          child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
                     ),
-                    child:TextFormField(
-                      onChanged:(String text){
+                    //Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:26),
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('-Mask')),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:26),
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('-Aarogya setu')),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left:26),
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('-Covid test certificate')),
+                ),
+                SizedBox(height: 12,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(24.0)
+                        ),
+                        child:TextFormField(
+                          controller: _controller1,
+                          decoration: InputDecoration(
+                              hintText: "Search a shop",
+                              contentPadding: const EdgeInsets.only(left: 24.0),
+                              border: InputBorder.none
+                          ),
+                        ),
 
-                      },
-                      controller: _controller1,
-                      decoration: InputDecoration(
-                          hintText: "Search a shop",
-                          contentPadding: const EdgeInsets.only(left: 24.0),
-                          border: InputBorder.none
                       ),
                     ),
+                    IconButton(
+                      icon: Icon(Icons.search,color: Colors.blue,),
+                      onPressed: (){
+                        _search();
+                      },
 
-                  ),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.search,color: Colors.blue,),
-                  onPressed: (){
-                    _search();
-                  },
+                StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection("Vendors").where("StoreName",isEqualTo:"${_controller1.text}").snapshots(),
+                    builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
+                      print("No:of Shops = ${snapshot.data.docs.length}");
+                      print(snapshot.hasData);
+                      print(snapshot.data.docs.isEmpty);
+                      if (snapshot.data.docs.isEmpty) {
+                        //print("No such shop found");
+                        return Center(child: Text("No such shop found",
+                          style: TextStyle(fontStyle: FontStyle.italic,
+                              fontSize: 15),));
+                      }
+                      else
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.lightBlueAccent,
+                          ),
+                        );
+                      }
+                      else if (snapshot.hasData) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            DocumentSnapshot user = snapshot.data.docs[index];
+                            if (user["Current_strength"] <=
+                                user["Total_strength"] * 0.25) {
+                              final_color = Colors.lightGreenAccent;
+                            }
+                            else if (user["Total_strength"] * 0.25 <
+                                user["Current_strength"] &&
+                                user["Current_strength"] <=
+                                    user["Total_strength"] * 0.75) {
+                              final_color = Colors.orange;
+                            }
+                            else if (user["Total_strength"] * 0.75 <
+                                user["Current_strength"] &&
+                                user["Current_strength"] <=
+                                    user["Total_strength"]) {
+                              final_color = Colors.red;
+                            }
+                            return Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        Text(user["StoreName"], style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25),),
+                                        Text(user["Instruction1"],
+                                          style: TextStyle(fontSize: 15),),
+                                        Text(user["Instruction2"],
+                                          style: TextStyle(fontSize: 15),),
+                                        Text("Open Time: ${user["Timings"][0]}",
+                                          style: TextStyle(fontSize: 15),),
+                                        Text("Close Time: ${user["Timings"][1]}",
+                                          style: TextStyle(fontSize: 15),),
+                                      ],),
+                                    Column(
+                                      children: [
+                                        Container(
+                                          height: 25,
+                                          width: 25,
+                                          decoration: BoxDecoration(
+                                              color: final_color,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20))
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                            "${user["Current_strength"]}/${user["Total_strength"]}")
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
 
+
+                        );
+                      }
+                      else {
+                        return Center(
+                          child: Text('Something is wrong'),
+                        );
+                      }
+                    }
                 ),
               ],
-            ),
-
-            StreamBuilder(
-                stream: stream1,
-                builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (BuildContext context,int index){
-                        DocumentSnapshot user = snapshot.data.docs[index];
-                        if(user["Current_strength"] <= user["Total_strength"]*0.25 ){
-                            final_color=Colors.lightGreenAccent;
-                        }
-                        else if(user["Total_strength"]*0.25< user["Current_strength"]&& user["Current_strength"]<= user["Total_strength"]*0.75){
-                          final_color=Colors.orange;
-                        }
-                        else if(user["Total_strength"]*0.75< user["Current_strength"]&& user["Current_strength"]<= user["Total_strength"]){
-                          final_color=Colors.red;
-                        }
-                        return Card(
-                          child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                              Column(
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(user["StoreName"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
-                                  Text(user["Instruction1"],style: TextStyle(fontSize: 15),),
-                                  Text(user["Instruction2"],style: TextStyle(fontSize: 15),),
-                                  Text("Open Time: ${user["Timings"][0]}",style: TextStyle(fontSize: 15),),
-                                  Text("Close Time: ${user["Timings"][1]}",style: TextStyle(fontSize: 15),),
-                          ],),
-                              Column(
-                                children: [
-                                  Container(
-                                  height: 25,
-                                  width: 25,
-                                  decoration: BoxDecoration(
-                                      color: final_color,
-                                      borderRadius: BorderRadius.all(Radius.circular(20))
-                                       ),
-                                     ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text("${user["Current_strength"]}/${user["Total_strength"]}")
-                                ],
-                              )
-                              ],
-                              ),
-                              ),
-                              );
-                              },
-
-
-                  );
-                }
-            ),
-          ],
-        )
+            )
+        ),
       );
 
     });
   }
 
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        body:Stack(
-            children: [
-              GoogleMap(
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: center,
-                  zoom: 11.0,
-                ),
-                mapType: _currentMapType,
-                markers: _markers,
-                onCameraMove: _onCameraMove,
-              ),
-              Align(
-                alignment: Alignment.bottomLeft ,
-                child: Padding(
-                  padding:EdgeInsets.only(top:650,left: 16) ,
-                  child: Align(
-                    alignment: Alignment.bottomLeft ,
-                    child: Column(
-                      children: [
-                        button(_onMapTypeButtonPressed, Icons.map),
-                        SizedBox(height: 16,),
-                        FloatingActionButton(
-                          backgroundColor: Colors.blue,
-                          child: Icon(Icons.logout,size:35),
-                          onPressed: () async{
-                            await _auth.signOut();
-                            Navigator.pushReplacementNamed(context, LandingPage.id);
-                          }
-
-                        ),
-                        //button(_onAddMarkerButtonPressed(center1), Icons.add_location),
-                      ],
-                    ),
-
-                  ),
-                ),
-              ),
-
-
-            ],
-
+      resizeToAvoidBottomInset: true,
+      body:Stack(
+        children: [
+          GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: center,
+              zoom: 11.0,
+            ),
+            mapType: _currentMapType,
+            markers: _markers,
+            onCameraMove: _onCameraMove,
           ),
+          Align(
+            alignment: Alignment.bottomLeft ,
+            child: Padding(
+              padding:EdgeInsets.only(top:650,left: 16) ,
+              child: Align(
+                alignment: Alignment.bottomLeft ,
+                child: Column(
+                  children: [
+                    button(_onMapTypeButtonPressed, Icons.map),
+                    SizedBox(height: 16,),
+                    FloatingActionButton(
+                        backgroundColor: Colors.blue,
+                        child: Icon(Icons.logout,size:35),
+                        onPressed: () async{
+                          await _auth.signOut();
+                          Navigator.pushReplacementNamed(context, LandingPage.id);
+                        }
+                    ),
+                    //button(_onAddMarkerButtonPressed(center1), Icons.add_location),
+                  ],
+                ),
+
+              ),
+            ),
+          ),
+
+
+        ],
+
+      ),
 
     );
   }
