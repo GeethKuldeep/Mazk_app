@@ -7,16 +7,6 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../LandingPage.dart';
 
-class Post {
-  final String title;
-  final String intruction1;
-  final String intruction2;
-  final Color color;
-  final String counter;
-
-
-  Post(this.title, this.intruction1,this.intruction2,this.color,this.counter);
-}
 
 class HomePage extends StatefulWidget {
   static const String id ='Home_Page';
@@ -44,13 +34,12 @@ class _HomePageState extends State<HomePage> {
   bool pressed5 = false;
   Color final_color;
   final stream1 =FirebaseFirestore.instance.collection("Vendors").snapshots();
-
   String present_count ="";
   int _count_;
   Color hello;
-
   String currentlocation="Current Location";
   String name_place="Geeth's House";
+  TextEditingController _controller1 = TextEditingController();
 
   @override
   void initState() {
@@ -70,6 +59,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  _search(){
+
+  }
   void _getUserLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
@@ -169,6 +161,7 @@ class _HomePageState extends State<HomePage> {
       return Container(
         child:  Column(
           children: [
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -199,10 +192,43 @@ class _HomePageState extends State<HomePage> {
                   alignment: Alignment.topLeft,
                   child: Text('-Covid test certificate')),
             ),
+            SizedBox(height: 12,),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(24.0)
+                    ),
+                    child:TextFormField(
+                      onChanged:(String text){
+
+                      },
+                      controller: _controller1,
+                      decoration: InputDecoration(
+                          hintText: "Search a shop",
+                          contentPadding: const EdgeInsets.only(left: 24.0),
+                          border: InputBorder.none
+                      ),
+                    ),
+
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.search,color: Colors.blue,),
+                  onPressed: (){
+                    _search();
+                  },
+
+                ),
+              ],
+            ),
+
             StreamBuilder(
                 stream: stream1,
                 builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
-
                   return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot.data.docs.length,
