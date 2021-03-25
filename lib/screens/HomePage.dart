@@ -43,8 +43,8 @@ class _HomePageState extends State<HomePage> {
   bool pressed4 = false;
   bool pressed5 = false;
   Color final_color;
-  final stream1 =FirebaseFirestore.instance.collection("Vendors").doc("ehQnQQYcm6tiU3MmqgtW").snapshots();
-  Map details={"Nike":["-Mask","-Aarogya setu",Colors.red,"50/100"],"Big Bazar":["-Mask","-Aarogya setu",Colors.orange,"35/75"],"Lalitha Jewellers":["-Mask","-Aarogya setu",Colors.lightGreenAccent,"50/150"],"Jack and Jones":["-Mask","-Aarogya setu",Colors.red,"25/45"],};
+  final stream1 =FirebaseFirestore.instance.collection("Vendors").snapshots();
+
   String present_count ="";
   int _count_;
   Color hello;
@@ -165,122 +165,68 @@ class _HomePageState extends State<HomePage> {
   }
 
   void ontap(context){
-
     showModalBottomSheet(context: context, builder:(BuildContext bc){
-      return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height*.60,
-              child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),
-                          child: Align(
-                              alignment:Alignment.topLeft,
-                              child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
-                        ),
-                        //Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:26),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('-Mask')),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:26),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('-Aarogya setu')),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:26),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('-Covid test certificate')),
-                    ),
-                    Expanded(
-                      child: SearchBar<Post>(
-                        onSearch: search,
-                        onItemFound: (Post post, int index) {
-                          return RefreshIndicator(
-                            onRefresh: refresh_count,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextButton(
-                                onPressed: (){
-                                  print("PRESSED");
-                                  refresh_count();
-                                },
-                                child: Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(post.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
-                                            Text(post.intruction1,style: TextStyle(fontSize: 15),),
-                                            Text(post.intruction2,style: TextStyle(fontSize: 15),),
-
-
-                                          ],
-                                        ),
-                                    Column(
-                                      children: [
-                                        Container(
-                                          height: 25,
-                                          width: 25,
-                                          decoration: BoxDecoration(
-                                              color: (post.title=="Nike")?hello:post.color,
-                                              borderRadius: BorderRadius.all(Radius.circular(20))
-                                          ),
-                                        ),
-                                        if(post.title=="Nike")
-                                          Text("${present_count}/75"),
-                                        if(post.title!="Nike")
-                                          Text(post.counter,style: TextStyle(fontSize: 15),)
-                                      ],
-                                    )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-
-                  ],
+      return Container(
+        child:  Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),
+                  child: Align(
+                      alignment:Alignment.topLeft,
+                      child: Text("SRMT Mall",style:TextStyle(fontSize: 35,fontWeight: FontWeight.bold))),
                 ),
-
+                //Padding( padding: const EdgeInsets.only(left:26,top:26,right: 26,bottom: 10),child: Text("L",style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize:30 )))
+              ],
             ),
-          ),
-        );
+            Padding(
+              padding: const EdgeInsets.only(left:26),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('-Mask')),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:26),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('-Aarogya setu')),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:26),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('-Covid test certificate')),
+            ),
+            StreamBuilder(
+                stream: stream1,
+                builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (BuildContext context,int index){
+                        DocumentSnapshot user = snapshot.data.docs[index];
+                        return Card(
+                          child: Column(
+                            children: [
+                              Text("${user.id}"),
+                              Text("${user["Instruction1"]}"),
 
-    });
-  }
+                            ],
+                          ),
+                        );
 
-  Future<List<Post>> search(String search1) async {
-    await Future.delayed(Duration(seconds: 2));
-    return List.generate(details.length, (int index) {
-      print("FUCK");
-      print("${details.values.toList()[index][2]}");
-
-      return Post("${details.keys.toList()[index]}", "${details.values.toList()[index][0]}", "${details.values.toList()[index][1]}", details.values.toList()[index][2],"${details.values.toList()[index][3]}"
+                      } );
+                }
+            ),
+          ],
+        )
       );
-    });
 
+    });
   }
+
 
 
 
@@ -288,7 +234,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body:Stack(
             children: [
               GoogleMap(
