@@ -208,16 +208,44 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (BuildContext context,int index){
                         DocumentSnapshot user = snapshot.data.docs[index];
                         return Card(
-                          child: Column(
-                            children: [
-                              Text("${user.id}"),
-                              Text("${user["Instruction1"]}"),
+                          child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                              Column(
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(user["StoreName"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                                  Text(user["Instruction1"],style: TextStyle(fontSize: 15),),
+                                  Text(user["Instruction2"],style: TextStyle(fontSize: 15),),
+                                  Text("Open Time: ${user["Timings"][0]}",style: TextStyle(fontSize: 15),),
+                                  Text("Close Time: ${user["Timings"][1]}",style: TextStyle(fontSize: 15),),
+                          ],),
+                              Column(
+                                children: [
+                                  Container(
+                                  height: 25,
+                                  width: 25,
+                                  decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.all(Radius.circular(20))
+                                       ),
+                                     ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text("${user["Current_strength"]}/${user["Total_strength"]}")
+                                ],
+                              )
+                              ],
+                              ),
+                              ),
+                              );
+                              },
 
-                            ],
-                          ),
-                        );
 
-                      } );
+                  );
                 }
             ),
           ],
