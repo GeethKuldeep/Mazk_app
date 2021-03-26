@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _controller1 = TextEditingController();
   TextEditingController _controller2 = TextEditingController();
   bool tapped = false;
+  String URL;
 
   @override
   void initState() {
@@ -383,10 +384,10 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
+                          margin: const EdgeInsets.only(left:5.0,right: 5.0),
                           decoration: BoxDecoration(
                               color: color,
-                              borderRadius: BorderRadius.circular(24.0)
+                              borderRadius: BorderRadius.circular(15.0)
                           ),
                           child: Row(
                             children: [
@@ -400,18 +401,20 @@ class _HomePageState extends State<HomePage> {
                                       Placename=hello;
                                     });
                                   },
+                                  style: TextStyle(color: Colors.white,fontSize: 20),
                                   decoration: InputDecoration(
                                       hintStyle: TextStyle(
                                         color: Colors.white, // <-- Change this
                                       ),
+
                                       hintText: "Search",
-                                      contentPadding: const EdgeInsets.only(left: 24.0),
+                                      contentPadding: const EdgeInsets.only(left: 24.0,right: 24.0),
                                       border: InputBorder.none
                                   ),
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(Icons.search,color: Colors.white,),
+                                icon: Icon(Icons.search,color: Colors.white,size: 28,),
                                 onPressed: () {
                                   _search1();
                                 },
@@ -440,44 +443,60 @@ class _HomePageState extends State<HomePage> {
                              else if (snapshot.hasData && snapshot.data != null) {
                                return ListView.builder(
                                  shrinkWrap: true,
-                                 itemCount: snapshot.data.docs.length,
+                                 itemCount: Placename == "SRMT"?1:snapshot.data.docs.length,
                                  itemBuilder: (BuildContext context, int index) {
                                    DocumentSnapshot user = snapshot.data.docs[index];
-                                   if(user.id==Placename)
+                                   if(user.id=="SRMT")
+                                    URL ="images/mall1.png";
+                                   else if(user.id=="Dominos")
+                                     URL ="images/dom.png";
+                                   else if(user.id == "Appollo")
+                                     URL ="images/hos.png";
+                                   if(Placename == "SRMT")
                                       return Container(
-                                     color: Colors.white,
-                                     child: ElevatedButton(
-                                       onPressed: (){
-                                         if(user.id=="SRMT")
-                                          zoom(center1);
-                                         else if(user.id=="Dominos")
-                                           zoom(center2);
-                                         else if(user.id == "Appollo")
-                                           zoom(center3);
-                                       },
-                                       child: Card(
-                                         child: Padding(
-                                           padding: const EdgeInsets.all(8.0),
-                                           child: Row(
-                                             mainAxisAlignment: MainAxisAlignment
-                                                 .spaceBetween,
-                                             children: [
-                                               Column(
-                                                 crossAxisAlignment: CrossAxisAlignment
-                                                     .start,
-                                                 children: [
-                                                   Text(user.id, style: TextStyle(
-                                                       fontWeight: FontWeight.bold,
-                                                       fontSize: 25),),
+                                        color: Colors.white,
+                                        child: ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundImage: AssetImage("images/mall1.png"),
+                                            ),
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                            title: Text("SRMT",style: TextStyle(fontWeight: FontWeight.bold),),
+                                            trailing: Icon(Icons.location_pin,color: Colors.black,),
+                                            onTap: () {
+                                                zoom(center1);
+                                            }
+                                        ),
+                                      );
+                                   return Column(
+                                       children: [
+                                         Container(
 
-                                                 ],),
-                                             ],
+                                           decoration: BoxDecoration(
+                                               color: Colors.white,
+                                               borderRadius: BorderRadius.all(Radius.circular(15))
+                                           ),
+                                           child: ListTile(
+                                               leading: CircleAvatar(
+                                                 backgroundImage: AssetImage(URL),
+                                               ),
+                                               contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                                               title: Text(user.id,style: TextStyle(fontWeight: FontWeight.bold),),
+                                               trailing: Icon(Icons.location_pin,color: Colors.black,),
+                                               onTap: () {
+                                                 if(user.id=="SRMT")
+                                                   zoom(center1);
+                                                 else if(user.id=="Dominos")
+                                                   zoom(center2);
+                                                 else if(user.id == "Appollo")
+                                                   zoom(center3);
+                                               }
                                            ),
                                          ),
-                                       ),
-                                     ),
+                                         SizedBox(height: 12,)
+                                       ],
+
                                    );
-                                   return Text("");
+
 
                                  },
 
