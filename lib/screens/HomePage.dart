@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   bool tapped = false;
   String URL;
   String URL1;
+
   @override
   void initState() {
     _getUserLocation();
@@ -80,6 +81,7 @@ class _HomePageState extends State<HomePage> {
 
     });
   }
+
   void _getUserLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
@@ -178,7 +180,6 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(context: context,shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
     ), builder:(BuildContext bc){
-
       return SingleChildScrollView(
         child: Container(
             child:  Column(
@@ -249,11 +250,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 StreamBuilder(
-                    stream: Shopname==null?FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").snapshots():FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").where("StoreName",isEqualTo:"${Shopname}").snapshots(),
+                    stream: Shopname!=null?FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").where("StoreName",isEqualTo:"${Shopname}").snapshots():FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").snapshots(),
                     builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
                       print("No:of Shops = ${snapshot.data.docs.length}");
-                      if (snapshot.data.docs.isEmpty ) {
-                        //print("No such shop found");
+                      if (snapshot.data.docs.isEmpty || snapshot.hasError || snapshot.hasData==false) {
+                        print("HELLLLO");
+                        print(snapshot.hasError);
+                        print(snapshot.hasData);
                         return Center(child: Text("No such shop found",
                           style: TextStyle(fontStyle: FontStyle.italic,
                               fontSize: 15),));
@@ -290,7 +293,7 @@ class _HomePageState extends State<HomePage> {
                             if(user["StoreName"]=="KFC")
                               URL1 ="images/kfc.png";
                             else if(user["StoreName"]=="Nike")
-                              URL1 ="images/nike.png";
+                              URL1 ="images/nike1.png";
                             return ListTile(
                               leading: CircleAvatar(
                                 backgroundImage: AssetImage(URL1),
@@ -351,7 +354,6 @@ class _HomePageState extends State<HomePage> {
         )
     ));
   }
-
 
   @override
   Widget build(BuildContext context) {
