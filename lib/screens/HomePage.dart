@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   static LatLng center1 = const LatLng(16.998600, 82.243592);
   static LatLng center2 = const LatLng(16.973475,82.237144);
   static LatLng center3 = const LatLng(16.960680,82.235901);
+  String Shopname;
   bool pressed1 = false;
   bool pressed2 = false;
   bool pressed3 = false;
@@ -60,7 +61,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   _search(){
+    setState(() {
+      Shopname =_controller1.text;
+    });
+    _controller1.clear();
 
+
+
+    //FocusScope.of(context).unfocus();
   }
   void _getUserLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -156,11 +164,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void ontap(context){
-    showModalBottomSheet(context: context, builder:(BuildContext bc){
+  void ontap(context,){
+    showModalBottomSheet(context: context,shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+    ), builder:(BuildContext bc){
+
       return SingleChildScrollView(
         child: Container(
-          height: 450,
+
+
             child:  Column(
               children: [
                 Row(
@@ -205,6 +217,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child:TextFormField(
                           controller: _controller1,
+                          onEditingComplete: _search,
                           decoration: InputDecoration(
                               hintText: "Search a shop",
                               contentPadding: const EdgeInsets.only(left: 24.0),
@@ -216,34 +229,30 @@ class _HomePageState extends State<HomePage> {
                     ),
                     IconButton(
                       icon: Icon(Icons.search,color: Colors.blue,),
-                      onPressed: (){
-                        _search();
-                      },
-
+                      onPressed: () {
+                       _search();
+                        },
                     ),
                   ],
                 ),
                 StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("Vendors").where("StoreName",isEqualTo:"${_controller1.text}").snapshots(),
+                    stream: Shopname==null?FirebaseFirestore.instance.collection("Vendors").snapshots():FirebaseFirestore.instance.collection("Vendors").where("StoreName",isEqualTo:"${Shopname}").snapshots(),
                     builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
                       print("No:of Shops = ${snapshot.data.docs.length}");
-                      print(snapshot.hasData);
-                      print(snapshot.data.docs.isEmpty);
-                      if (snapshot.data.docs.isEmpty) {
+                      if (snapshot.data.docs.isEmpty ) {
                         //print("No such shop found");
                         return Center(child: Text("No such shop found",
                           style: TextStyle(fontStyle: FontStyle.italic,
                               fontSize: 15),));
                       }
-                      else
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+                      else if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
                           child: CircularProgressIndicator(
                             backgroundColor: Colors.lightBlueAccent,
                           ),
                         );
                       }
-                      else if (snapshot.hasData) {
+                      else if (snapshot.hasData && snapshot.data != null) {
                         return ListView.builder(
                           shrinkWrap: true,
                           itemCount: snapshot.data.docs.length,
