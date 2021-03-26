@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
     return FloatingActionButton(
       onPressed: fuction,
       materialTapTargetSize: MaterialTapTargetSize.padded,
-      backgroundColor: Colors.blue,
+      backgroundColor: color,
       child: Icon(icon,size:36.0),
 
 
@@ -181,9 +181,9 @@ class _HomePageState extends State<HomePage> {
 
       return SingleChildScrollView(
         child: Container(
-
             child:  Column(
               children: [
+                SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -202,14 +202,12 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.topLeft,
                       child: Text('Instructions:',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left:26),
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Text('1.Mask')),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(left:26),
                   child: Align(
@@ -333,6 +331,7 @@ class _HomePageState extends State<HomePage> {
                       }
                     }
                 ),
+                SizedBox(height: 25,),
               ],
             )
         ),
@@ -520,7 +519,7 @@ class _HomePageState extends State<HomePage> {
                     button(_onMapTypeButtonPressed, Icons.map),
                     SizedBox(height: 16,),
                     FloatingActionButton(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: color,
                         child: Icon(Icons.logout,size:35),
                         onPressed: () async{
                           await _auth.signOut();
