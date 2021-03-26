@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   var color =  Color(0xFF7BA3F6);
   final _auth = FirebaseAuth.instance;
   Completer<GoogleMapController>_controller = Completer();
@@ -28,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   static LatLng center2 = const LatLng(16.973475,82.237144);
   static LatLng center3 = const LatLng(16.960680,82.235901);
   String Shopname;
+  String Placename;
   bool pressed1 = false;
   bool pressed2 = false;
   bool pressed3 = false;
@@ -41,6 +41,8 @@ class _HomePageState extends State<HomePage> {
   String currentlocation="Current Location";
   String name_place="Geeth's House";
   TextEditingController _controller1 = TextEditingController();
+  TextEditingController _controller2 = TextEditingController();
+  bool tapped = false;
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     print("Marker3 ${_markers}");
     _onAddMarkerButtonPressed(center2,"Dominos","Open",pressed3,3);
     print("Marker4 ${_markers}");
-    _onAddMarkerButtonPressed(center3,"Appllo hospital","Open",pressed4,4);
+    _onAddMarkerButtonPressed(center3,"Appollo","Open",pressed4,4);
     print("Marker5 ${_markers}");
     refresh_count();
 
@@ -65,9 +67,16 @@ class _HomePageState extends State<HomePage> {
       Shopname = _controller1.text;
     });
     _controller1.clear();
-  }
-  _search1(){
 
+  }
+
+  _search1(){
+    setState(() {
+      //Placename = _controller2.text;
+      tapped=false;
+      _controller2.clear();
+
+    });
   }
   void _getUserLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -235,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 StreamBuilder(
-                    stream: Shopname==null?FirebaseFirestore.instance.collection("Vendors").snapshots():FirebaseFirestore.instance.collection("Vendors").where("StoreName",isEqualTo:"${Shopname}").snapshots(),
+                    stream: Shopname==null?FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").snapshots():FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").where("StoreName",isEqualTo:"${Shopname}").snapshots(),
                     builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
                       print("No:of Shops = ${snapshot.data.docs.length}");
                       if (snapshot.data.docs.isEmpty ) {
@@ -338,6 +347,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  zoom(LatLng location)async{
+    final GoogleMapController mapController1 = await _controller.future;
+    mapController1.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+            target: LatLng(location.latitude,location.longitude),
+            zoom:18.0,
+            bearing: 90.0,
+            tilt: 45.0
+        )
+    ));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -359,36 +380,117 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.topCenter ,
             child: Padding(
                     padding: const EdgeInsets.only(top:45.0,left: 10,right: 10),
-                    child: Container(
-                      margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
-                      decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(24.0)
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              //controller: _controller1,
-                              onEditingComplete: _search1,
-                              decoration: InputDecoration(
-                                  hintStyle: TextStyle(
-                                    color: Colors.white, // <-- Change this
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
+                          decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(24.0)
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _controller2,
+                                  onEditingComplete: _search1,
+                                  onChanged: (String hello){
+                                    setState(() {
+                                      tapped =true;
+                                      Placename=hello;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                      hintStyle: TextStyle(
+                                        color: Colors.white, // <-- Change this
+                                      ),
+                                      hintText: "Search",
+                                      contentPadding: const EdgeInsets.only(left: 24.0),
+                                      border: InputBorder.none
                                   ),
-                                  hintText: "Search",
-                                  contentPadding: const EdgeInsets.only(left: 24.0),
-                                  border: InputBorder.none
+                                ),
                               ),
-                            ),
+                              IconButton(
+                                icon: Icon(Icons.search,color: Colors.white,),
+                                onPressed: () {
+                                  _search1();
+                                },
+                              ),
+                            ],
                           ),
-                          IconButton(
-                            icon: Icon(Icons.search,color: Colors.white,),
-                            onPressed: () {
-                              _search1();
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                       if(tapped==true)
+                          StreamBuilder(
+                           stream: Placename== null? FirebaseFirestore.instance.collection("Vendors").snapshots():FirebaseFirestore.instance.collection("Vendors").snapshots(),
+                           builder:(BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
+                             print("No:of Shops = ${snapshot.data.docs.length}");
+                             if (snapshot.data.docs.isEmpty ) {
+                               //print("No such shop found");
+                               return Center(child: Text("No such shop found",
+                                 style: TextStyle(fontStyle: FontStyle.italic,
+                                     fontSize: 15),));
+                             }
+                             else if (snapshot.connectionState == ConnectionState.waiting) {
+                               return Center(
+                                 child: CircularProgressIndicator(
+                                   backgroundColor: Colors.lightBlueAccent,
+                                 ),
+                               );
+                             }
+                             else if (snapshot.hasData && snapshot.data != null) {
+                               return ListView.builder(
+                                 shrinkWrap: true,
+                                 itemCount: snapshot.data.docs.length,
+                                 itemBuilder: (BuildContext context, int index) {
+                                   DocumentSnapshot user = snapshot.data.docs[index];
+                                   if(user.id==Placename)
+                                      return Container(
+                                     color: Colors.white,
+                                     child: ElevatedButton(
+                                       onPressed: (){
+                                         if(user.id=="SRMT")
+                                          zoom(center1);
+                                         else if(user.id=="Dominos")
+                                           zoom(center2);
+                                         else if(user.id == "Appollo")
+                                           zoom(center3);
+                                       },
+                                       child: Card(
+                                         child: Padding(
+                                           padding: const EdgeInsets.all(8.0),
+                                           child: Row(
+                                             mainAxisAlignment: MainAxisAlignment
+                                                 .spaceBetween,
+                                             children: [
+                                               Column(
+                                                 crossAxisAlignment: CrossAxisAlignment
+                                                     .start,
+                                                 children: [
+                                                   Text(user.id, style: TextStyle(
+                                                       fontWeight: FontWeight.bold,
+                                                       fontSize: 25),),
+
+                                                 ],),
+                                             ],
+                                           ),
+                                         ),
+                                       ),
+                                     ),
+                                   );
+                                   return Text("");
+
+                                 },
+
+
+                               );
+                             }
+                             else {
+                               return Center(
+                                 child: Text('Something is wrong'),
+                               );
+                             }
+                           } )
+                      ],
                     ),
                   ),
 
