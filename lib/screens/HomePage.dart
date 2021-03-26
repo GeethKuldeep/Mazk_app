@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var color =  Color(0xFF7BA3F6);
+  var color1 =  Color(0xFFD50000);
   final _auth = FirebaseAuth.instance;
   Completer<GoogleMapController>_controller = Completer();
   final Set<Marker> _markers = {};
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _controller2 = TextEditingController();
   bool tapped = false;
   String URL;
-
+  String URL1;
   @override
   void initState() {
     _getUserLocation();
@@ -199,49 +200,55 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(left:26),
                   child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text('-Mask')),
+                      child: Text('Instructions:',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(left:26),
                   child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text('-Aarogya setu')),
+                      child: Text('1.Mask')),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(left:26),
                   child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text('-Covid test certificate')),
+                      child: Text('2.Covid test certificate')),
                 ),
                 SizedBox(height: 12,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
-                        decoration: BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.circular(24.0)
-                        ),
-                        child:TextFormField(
+                Container(
+                  margin: const EdgeInsets.only(left:5.0,right: 5.0),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(15.0)),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
                           controller: _controller1,
                           onEditingComplete: _search,
+                          style: TextStyle(color: Colors.white,fontSize: 18),
+                          cursorColor: Colors.white,
                           decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                color: Colors.white, // <-- Change this
+                              ),
+
                               hintText: "Search a shop",
                               contentPadding: const EdgeInsets.only(left: 24.0),
                               border: InputBorder.none
                           ),
                         ),
-
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.search,color: Colors.blue,),
-                      onPressed: () {
-                       _search();
-                        },
-                    ),
-                  ],
+                      IconButton(
+                        icon: Icon(Icons.search,color: Colors.white,),
+                        onPressed: () {
+                         _search();
+                          },
+                      ),
+                    ],
+                  ),
                 ),
                 StreamBuilder(
                     stream: Shopname==null?FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").snapshots():FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").where("StoreName",isEqualTo:"${Shopname}").snapshots(),
@@ -280,52 +287,39 @@ class _HomePageState extends State<HomePage> {
                                 user["Current_strength"] &&
                                 user["Current_strength"] <=
                                     user["Total_strength"]) {
-                              final_color = Colors.red;
+                              final_color = color1;
                             }
-                            return Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Text(user["StoreName"], style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25),),
-                                        Text(user["Instruction1"],
-                                          style: TextStyle(fontSize: 15),),
-                                        Text(user["Instruction2"],
-                                          style: TextStyle(fontSize: 15),),
-                                        Text("Open Time: ${user["Timings"][0]}",
-                                          style: TextStyle(fontSize: 15),),
-                                        Text("Close Time: ${user["Timings"][1]}",
-                                          style: TextStyle(fontSize: 15),),
-                                      ],),
-                                    Column(
-                                      children: [
-                                        Container(
-                                          height: 25,
-                                          width: 25,
-                                          decoration: BoxDecoration(
-                                              color: final_color,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                            "${user["Current_strength"]}/${user["Total_strength"]}")
-                                      ],
-                                    )
-                                  ],
-                                ),
+                            if(user["StoreName"]=="KFC")
+                              URL1 ="images/kfc.png";
+                            else if(user["StoreName"]=="Nike")
+                              URL1 ="images/nike.png";
+                            return ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: AssetImage(URL1),
                               ),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                              title: Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                              subtitle: Text("Open Time: ${user["Timings"][0]}\nClose Time: ${user["Timings"][1]}",
+                                style: TextStyle(fontSize: 10),),
+
+                              trailing: Column(
+                                children: [
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                        color: final_color,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                      "${user["Current_strength"]}/${user["Total_strength"]}")
+                                ],
+                              )
                             );
                           },
 
@@ -392,6 +386,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                 child: TextFormField(
+                                  cursorColor: Colors.white,
                                   controller: _controller2,
                                   onEditingComplete: _search1,
                                   onChanged: (String hello){
