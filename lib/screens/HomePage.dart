@@ -181,7 +181,6 @@ class _HomePageState extends State<HomePage> {
       return SingleChildScrollView(
         child: Container(
 
-
             child:  Column(
               children: [
                 Row(
@@ -406,7 +405,6 @@ class _HomePageState extends State<HomePage> {
                                       hintStyle: TextStyle(
                                         color: Colors.white, // <-- Change this
                                       ),
-
                                       hintText: "Search",
                                       contentPadding: const EdgeInsets.only(left: 24.0,right: 24.0),
                                       border: InputBorder.none
@@ -454,7 +452,10 @@ class _HomePageState extends State<HomePage> {
                                      URL ="images/hos.png";
                                    if(Placename == "SRMT")
                                       return Container(
-                                        color: Colors.white,
+
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(15))),
                                         child: ListTile(
                                             leading: CircleAvatar(
                                               backgroundImage: AssetImage("images/mall1.png"),
@@ -512,9 +513,6 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-
-
-
           ),
           Align(
             alignment: Alignment.bottomLeft ,
@@ -541,8 +539,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-
-
         ],
 
       ),
