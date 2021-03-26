@@ -28,6 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
   var color1 =  Colors.deepOrangeAccent;
 
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
+  var color =  Color(0xFF7BA3F6);
   final _auth = FirebaseAuth.instance;
   Completer<GoogleMapController>_controller = Completer();
   final Set<Marker> _markers = {};
@@ -60,15 +60,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  _search(){
+  _search() {
     setState(() {
-      Shopname =_controller1.text;
+      Shopname = _controller1.text;
     });
     _controller1.clear();
+  }
+  _search1(){
 
-
-
-    //FocusScope.of(context).unfocus();
   }
   void _getUserLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -355,6 +354,46 @@ class _HomePageState extends State<HomePage> {
             mapType: _currentMapType,
             markers: _markers,
             onCameraMove: _onCameraMove,
+          ),
+          Align(
+            alignment: Alignment.topCenter ,
+            child: Padding(
+                    padding: const EdgeInsets.only(top:45.0,left: 10,right: 10),
+                    child: Container(
+                      margin: const EdgeInsets.only(left:12.0,bottom: 8.0),
+                      decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(24.0)
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              //controller: _controller1,
+                              onEditingComplete: _search1,
+                              decoration: InputDecoration(
+                                  hintStyle: TextStyle(
+                                    color: Colors.white, // <-- Change this
+                                  ),
+                                  hintText: "Search",
+                                  contentPadding: const EdgeInsets.only(left: 24.0),
+                                  border: InputBorder.none
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.search,color: Colors.white,),
+                            onPressed: () {
+                              _search1();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+
+
           ),
           Align(
             alignment: Alignment.bottomLeft ,
