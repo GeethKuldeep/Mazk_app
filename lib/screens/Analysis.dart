@@ -26,6 +26,7 @@ class _AnalysisState extends State<Analysis> {
   var color4 =  Color(0xFF0050F5);
   var color5 =  Color(0xFFF4592F);
   bool valuefirst = false;
+  QueryDocumentSnapshot value1;
 
 
 
@@ -54,6 +55,7 @@ class _AnalysisState extends State<Analysis> {
             querySnapshot.docs.forEach((result) {
               setState(() {
                 if(result["StoreName"]=="Nike"){
+                  value1 =result;
                   user = result.data();
                   print(user);
                 }
@@ -65,6 +67,35 @@ class _AnalysisState extends State<Analysis> {
 
       });
     });
+  }
+
+  uploaddata(String shopname)async{
+
+
+    FirebaseFirestore.instance.collection("Vendors").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        if(result.id == "SRMT"){
+          FirebaseFirestore.instance
+              .collection("Vendors")
+              .doc("SRMT")
+              .collection("SRMT")
+              .get()
+              .then((querySnapshot) {
+            querySnapshot.docs.forEach((result) {
+              print(result.id);
+              if(result["StoreName"]== shopname){
+                FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").doc(result.id).update({
+                  'Added':"True"
+                });
+              }
+            });
+          });
+        }
+
+      });
+    });
+
+
   }
 
   @override
@@ -224,10 +255,17 @@ class _AnalysisState extends State<Analysis> {
                           onChanged: (bool value) {
                             setState(() {
                               this.valuefirst = value;
-                              if(valuefirst)
-                                Provider.of<Myschedule>(context, listen: false).add(user["StoreName"]);
-                              else
-                                Provider.of<Myschedule>(context, listen: false).delete(user["StoreName"]);
+                              if(valuefirst){
+                                FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").doc(value1.id).update({
+                                  'Added':"True"
+                                });
+                              }
+                                else{
+                                FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").doc(value1.id).update({
+                                  'Added':"False"
+                                });
+                              }
+
                             });
                           },
                         ),

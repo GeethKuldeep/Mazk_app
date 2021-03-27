@@ -36,6 +36,7 @@ dependencies:
   flappy_search_bar: 1.4.1
   http:
   syncfusion_flutter_charts: ^18.4.49
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
