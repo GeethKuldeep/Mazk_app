@@ -1,5 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
+}
 
 class Analysis extends StatefulWidget {
   @override
@@ -14,6 +22,10 @@ class _AnalysisState extends State<Analysis> {
   var color2 =  Color(0xFFFDDED5);
   var color3 =  Color(0xFFF4592F);
   var color4 =  Color(0xFF0050F5);
+  var color5 =  Color(0xFFF4592F);
+
+
+
 
 
 
@@ -139,7 +151,46 @@ class _AnalysisState extends State<Analysis> {
             ),
             SizedBox(height: 15,),
             Text("Our timings:",style: TextStyle(fontWeight: FontWeight.bold,color: color4,fontSize: 25),),
+            SizedBox(height: 15,),
+            Center(
+                child: Container(
+                    child: SfCartesianChart(
+                        backgroundColor: Colors.white,
+                        primaryXAxis: CategoryAxis(),
+                        // Enable legend
+                        //legend: Legend(isVisible: true),
+                        // Enable tooltip
+                        tooltipBehavior: TooltipBehavior(
+                          header: "Crowd",
+                            enable: true
+                        ),
+                        series: <LineSeries<SalesData, String>>[
+                          LineSeries<SalesData, String>(
+                            color: color5,
+                              width:3.5,
+                              dataSource:  <SalesData>[
+                                SalesData('${user["Timings"][0]}', 35),
+                                SalesData("10:30AM", 45),
+                                SalesData("11:30AM", 55),
+                                SalesData("12:30PM", 75),
+                                SalesData("1:30PM", 15),
+                                SalesData("2:30PM", 95),
+                                SalesData("3:30PM", 105),
+                                SalesData("4:30PM", 125),
+                                SalesData("5:30PM", 25),
+                                SalesData('${user["Timings"][1]}', 130),
 
+                              ],
+                              xValueMapper: (SalesData sales, _) => sales.year,
+                              yValueMapper: (SalesData sales, _) => sales.sales,
+
+                              // Enable data label
+                              //dataLabelSettings: DataLabelSettings(isVisible: true)
+                          )
+                        ]
+                    )
+                )
+            )
 
           ],
         ),
