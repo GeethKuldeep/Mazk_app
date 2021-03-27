@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vibranium/screens/HomePage.dart';
+import 'package:vibranium/screens/Schedule.dart';
 
 import 'Homepage1.dart';
 
@@ -116,7 +117,7 @@ class _DecideState extends State<Decide> {
                   onPressed: () {
                     if(user=="User"){
                       Navigator.of(context)
-                          .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+                          .pushReplacement(MaterialPageRoute(builder: (context) => Schedule()));
                     }
                     else{
                       ScaffoldMessenger.of(context).showSnackBar(
