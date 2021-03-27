@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vibranium/screens/Analysis.dart';
 import '../LandingPage.dart';
 
 
@@ -293,33 +294,39 @@ class _HomePageState extends State<HomePage> {
                               URL1 ="images/kfc.png";
                             else if(user["StoreName"]=="Nike")
                               URL1 ="images/nike1.png";
-                            return ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: AssetImage(URL1),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                              title: Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                              subtitle: Text("Open Time: ${user["Timings"][0]}\nClose Time: ${user["Timings"][1]}",
-                                style: TextStyle(fontSize: 10),),
+                            return TextButton(
+                              onPressed: (){
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(builder: (context) => Analysis()));
+                              },
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage: AssetImage(URL1),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                title: Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                                subtitle: Text("Open Time: ${user["Timings"][0]}\nClose Time: ${user["Timings"][1]}",
+                                  style: TextStyle(fontSize: 10),),
 
-                              trailing: Column(
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    width: 20,
-                                    decoration: BoxDecoration(
-                                        color: final_color,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))
+                                trailing: Column(
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                          color: final_color,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20))
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                      "${user["Current_strength"]}/${user["Total_strength"]}")
-                                ],
-                              )
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                        "${user["Current_strength"]}/${user["Total_strength"]}")
+                                  ],
+                                )
+                              ),
                             );
                           },
 
