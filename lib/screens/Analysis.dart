@@ -11,6 +11,12 @@ class _AnalysisState extends State<Analysis> {
   String URL1;
   Color final_color;
   var color1 =  Color(0xFFD50000);
+  var color2 =  Color(0xFFFDDED5);
+  var color3 =  Color(0xFFF4592F);
+  var color4 =  Color(0xFF0050F5);
+
+
+
 
   @override
   void initState() {
@@ -70,43 +76,73 @@ class _AnalysisState extends State<Analysis> {
       URL1 ="images/nike1.png";
 
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 35,),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage(URL1),
-                  radius: 40,
-                ),
-                Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),),
-                Column(
-                  children: [
-                    Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                          color: final_color,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(20))
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 35,),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage(URL1),
+                    radius: 40,
+                  ),
+                  Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),),
+                  Column(
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                            color: final_color,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(20))
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                        "${user["Current_strength"]}/${user["Total_strength"]}")
-                  ],
-                )
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                          "${user["Current_strength"]}/${user["Total_strength"]}")
+                    ],
+                  )
 
 
-              ],
+                ],
+              ),
             ),
-          )
-        ],
+            Text("Instructions:",style: TextStyle(fontWeight: FontWeight.bold,color: color3,fontSize: 25),),
+            SizedBox(height: 15,),
+            Container(
+              height: MediaQuery.of(context).size.height*0.11,
+              width: MediaQuery.of(context).size.height*0.4,
+              decoration: BoxDecoration(
+                  color: color2,
+                borderRadius: BorderRadius.all(Radius.circular(20))
+              ),
+              child:Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("-${user["Instruction1"]}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                    SizedBox(height: 5,),
+                    Text("-${user["Instruction2"]}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 15,),
+            Text("Our timings:",style: TextStyle(fontWeight: FontWeight.bold,color: color4,fontSize: 25),),
+
+
+          ],
+        ),
       ),
     );
 
