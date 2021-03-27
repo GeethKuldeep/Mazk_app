@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vibranium/screens/HomePage.dart';
+import 'package:vibranium/screens/Myschedule.dart';
 
 
 class Schedule extends StatefulWidget {
@@ -25,6 +27,11 @@ class _ScheduleState extends State<Schedule> {
           children: [
             SizedBox(height: 40,),
             Text("My Schedule",style: TextStyle(fontWeight: FontWeight.bold,color: color4,fontSize: 34),),
+            Consumer<Myschedule>(
+             builder: (context, cart, child) {
+              return Text("${cart.tasks.length}");
+              }
+            ),
             StreamBuilder(
                 stream:FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").snapshots(),
                 builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:vibranium/screens/Myschedule.dart';
 
 class SalesData {
   SalesData(this.year, this.sales);
@@ -24,7 +26,6 @@ class _AnalysisState extends State<Analysis> {
   var color4 =  Color(0xFF0050F5);
   var color5 =  Color(0xFFF4592F);
   bool valuefirst = false;
-  bool valuesecond = false;
 
 
 
@@ -217,13 +218,16 @@ class _AnalysisState extends State<Analysis> {
                       Transform.scale(
                         scale: 1.25,
                         child: Checkbox(
-
                           checkColor: Colors.black,
                           activeColor: color5,
                           value: this.valuefirst,
                           onChanged: (bool value) {
                             setState(() {
                               this.valuefirst = value;
+                              if(valuefirst)
+                                Provider.of<Myschedule>(context, listen: false).add(user["StoreName"]);
+                              else
+                                Provider.of<Myschedule>(context, listen: false).delete(user["StoreName"]);
                             });
                           },
                         ),
