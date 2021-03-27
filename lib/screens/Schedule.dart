@@ -96,7 +96,6 @@ class _ScheduleState extends State<Schedule> {
                   if(snapshot.data.docs[2]["Added"]== "True"){
                     check.add(snapshot.data.docs[2]["StoreName"]);
                   }
-
                   print("No:of Shops = ${snapshot.data.docs.length}");
                   if (snapshot.data.docs.isEmpty || snapshot.hasError || snapshot.hasData==false) {
                     print("HELLLLO");

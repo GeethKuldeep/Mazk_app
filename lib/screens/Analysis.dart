@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import 'package:vibranium/screens/Myschedule.dart';
+
 
 class SalesData {
   SalesData(this.year, this.sales);
@@ -12,9 +11,12 @@ class SalesData {
 }
 
 class Analysis extends StatefulWidget {
+  String shop_name;
+  Analysis(this.shop_name);
   @override
   _AnalysisState createState() => _AnalysisState();
 }
+
 
 class _AnalysisState extends State<Analysis> {
   var user;
@@ -54,7 +56,7 @@ class _AnalysisState extends State<Analysis> {
               .then((querySnapshot) {
             querySnapshot.docs.forEach((result) {
               setState(() {
-                if(result["StoreName"]=="Nike"){
+                if(result["StoreName"]==widget.shop_name){
                   value1 =result;
                   user = result.data();
                   print(user);
@@ -272,7 +274,21 @@ class _AnalysisState extends State<Analysis> {
                       ),
                     ],
                   ),
-                  Text("item is removed from schedule",style: TextStyle(color: color5,fontSize: 10),)
+                  if(valuefirst == false)
+                    Column(
+                      children: [
+                        Text("Item is removed from schedule",style: TextStyle(color: color5,fontSize: 10),),
+
+                      ],
+                    ),
+                  if(valuefirst == true)
+                    Column(
+                      children: [
+                        Text("Iteam is added to the schedule",style: TextStyle(color: color5,fontSize: 10),),
+
+                      ],
+                    ),
+                  SizedBox(height: 10,)
                 ],
               ),
 

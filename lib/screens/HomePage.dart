@@ -297,7 +297,7 @@ class _HomePageState extends State<HomePage> {
                             return TextButton(
                               onPressed: (){
                                 Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(builder: (context) => Analysis()));
+                                    .pushReplacement(MaterialPageRoute(builder: (context) => Analysis(user["StoreName"])));
                               },
                               child: ListTile(
                                 leading: CircleAvatar(
