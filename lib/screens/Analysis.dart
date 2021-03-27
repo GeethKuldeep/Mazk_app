@@ -72,36 +72,45 @@ class _AnalysisState extends State<Analysis> {
     return Scaffold(
       body: Column(
         children: [
-          ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(URL1),
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              title: Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-              subtitle: Text("Open Time: ${user["Timings"][0]}\nClose Time: ${user["Timings"][1]}",
-                style: TextStyle(fontSize: 10),),
-
-              trailing: Column(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(
-                        color: final_color,
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(20))
+          SizedBox(height: 35,),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(URL1),
+                  radius: 40,
+                ),
+                Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),),
+                Column(
+                  children: [
+                    Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                          color: final_color,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(20))
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                      "${user["Current_strength"]}/${user["Total_strength"]}")
-                ],
-              )
-          ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                        "${user["Current_strength"]}/${user["Total_strength"]}")
+                  ],
+                )
+
+
+              ],
+            ),
+          )
         ],
       ),
     );
+
+
+
   }
 }
