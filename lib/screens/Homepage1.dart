@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vibranium/screens/dashboard.dart';
 
 import '../LandingPage.dart';
 
@@ -35,8 +36,9 @@ String get _Instruction1 => _Instruction1Controller.text;
 String get _Openingtime => _OpeningtimeController.text;
 String get _Closingtime => _ClosingtimeController.text;
 final firestoreInstance = FirebaseFirestore.instance;
-final _auth = FirebaseAuth.instance;
+
 LatLng center;
+final _auth = FirebaseAuth.instance;
 
 
 
@@ -46,6 +48,7 @@ class _HomePage1State extends State<HomePage1> {
     await _auth.signOut();
     Navigator.pushReplacementNamed(context, LandingPage.id);
   }
+
   _submit()async{
     await firestoreInstance
         .collection('Vendors')
@@ -57,10 +60,11 @@ class _HomePage1State extends State<HomePage1> {
       'ShopType' :_shoptype,
       'Timings':FieldValue.arrayUnion([_Openingtime,_Closingtime]),
       'Location':FieldValue.arrayUnion([center.latitude,center.longitude]),
-      'Current_strength':50,
+      'Current_strength':75,
       'LocatedIN':_shoptypename,
-
-
+      'CreatedBY':_auth.currentUser.uid,
+      'Added':'false',
+      'Safest_time':"1:30PM"
 
     });
     ScaffoldMessenger.of(context).showSnackBar(
@@ -68,6 +72,7 @@ class _HomePage1State extends State<HomePage1> {
         content: const Text('Your Data has been submitted'),
       ),
     );
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>Dashboard()));
   }
   void _getUserLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -78,6 +83,7 @@ class _HomePage1State extends State<HomePage1> {
       print("hello1");
     });
   }
+
   void _shoptypeEditingComplete() {
     FocusScope.of(context).requestFocus(_shoptypenameFocusNode);
   }
@@ -110,24 +116,13 @@ class _HomePage1State extends State<HomePage1> {
                 height: 70,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 25,),
                   Text("Admin",
                       style: TextStyle(
                           fontSize: 35,
                           fontWeight: FontWeight.bold,
                           color: color1)),
-                  RaisedButton(
-                      child: Icon(Icons.logout,color: Colors.white,),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      color: color1,
-                      onPressed: () {
-
-                        signout();
-                      }),
                 ],
               ),
               SizedBox(
@@ -191,17 +186,68 @@ class _HomePage1State extends State<HomePage1> {
                     ),
                     if(_shoptype == "Complex")
                       TextFormField(
+                        style: TextStyle(color: Colors.black),
+                        cursorColor: Colors.black,
+                        key: ValueKey("Shoptypename"),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Enter your complex name';
+                          }
+                          return null;
+                        },
+                        controller:_shoptypenameController,
+                        focusNode: _shoptypenameFocusNode,
+                        decoration: InputDecoration(
+                          labelStyle: TextStyle(color: color1, fontSize: 13),
+                          contentPadding: const EdgeInsets.all(8.0),
+                          errorBorder: new OutlineInputBorder(
+                            borderSide: new BorderSide(
+                              color: color2,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: color1,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: color1,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          hintText: "Your Complex name",
+                          labelText: 'Complex name',
+                          errorStyle: TextStyle(
+                            color: color1,
+                          ),
+                        ),
+                        autocorrect: false,
+                        keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: _shoptypenameEditingComplete,
+                      ),
+                    if(_shoptype == "Complex")
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.07,
+                      ),
+                    TextFormField(
                       style: TextStyle(color: Colors.black),
                       cursorColor: Colors.black,
-                      key: ValueKey("Shoptypename"),
+                      key: ValueKey("ShopName"),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Enter your complex name';
+                          return 'Enter your ShopName';
                         }
                         return null;
                       },
-                      controller:_shoptypenameController,
-                      focusNode: _shoptypenameFocusNode,
+                      controller:_shopnameController,
+                      focusNode: _shopnameFocusNode,
                       decoration: InputDecoration(
                         labelStyle: TextStyle(color: color1, fontSize: 13),
                         contentPadding: const EdgeInsets.all(8.0),
@@ -226,8 +272,8 @@ class _HomePage1State extends State<HomePage1> {
                           ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        hintText: "Your Complex name",
-                        labelText: 'Complex name',
+                        hintText: "Enter your Shop Name",
+                        labelText: 'ShopName',
                         errorStyle: TextStyle(
                           color: color1,
                         ),
@@ -235,109 +281,58 @@ class _HomePage1State extends State<HomePage1> {
                       autocorrect: false,
                       keyboardType: TextInputType.name,
                       textInputAction: TextInputAction.next,
-                      onEditingComplete: _shoptypenameEditingComplete,
+                      onEditingComplete: _shopnameEditingComplete,
                     ),
-                    if(_shoptype == "Complex")
-                      SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.07,
-                    ),
-                    TextFormField(
-                        style: TextStyle(color: Colors.black),
-                        cursorColor: Colors.black,
-                        key: ValueKey("ShopName"),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Enter your ShopName';
-                          }
-                          return null;
-                        },
-                        controller:_shopnameController,
-                        focusNode: _shopnameFocusNode,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: color1, fontSize: 13),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          errorBorder: new OutlineInputBorder(
-                            borderSide: new BorderSide(
-                              color: color2,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: color1,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: color1,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          hintText: "Enter your Shop Name",
-                          labelText: 'ShopName',
-                          errorStyle: TextStyle(
-                            color: color1,
-                          ),
-                        ),
-                        autocorrect: false,
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.next,
-                        onEditingComplete: _shopnameEditingComplete,
-                      ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.07,
                     ),
                     TextFormField(
-                        style: TextStyle(color: Colors.black),
-                        cursorColor: Colors.black,
-                        key: ValueKey("shopcapacity"),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Enter a  number';
-                          }
-                          return null;
-                        },
-                        controller: _shopcapacityController,
-                        focusNode: _shopcapacityFocusNode,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: color1, fontSize: 13),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          errorBorder: new OutlineInputBorder(
-                            borderSide: new BorderSide(
-                              color: color2,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
+                      style: TextStyle(color: Colors.black),
+                      cursorColor: Colors.black,
+                      key: ValueKey("shopcapacity"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter a  number';
+                        }
+                        return null;
+                      },
+                      controller: _shopcapacityController,
+                      focusNode: _shopcapacityFocusNode,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: color1, fontSize: 13),
+                        contentPadding: const EdgeInsets.all(8.0),
+                        errorBorder: new OutlineInputBorder(
+                          borderSide: new BorderSide(
+                            color: color2,
+                            width: 2.0,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: color1,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: color1,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          labelText: 'Shop Capacity',
-                          hintText: "100",
-                          errorStyle: TextStyle(
-                            color: color1,
-                          ),
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
-                        autocorrect: false,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        onEditingComplete: _shopcapacityEditingComplete,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: color1,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: color1,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        labelText: 'Shop Capacity',
+                        hintText: "100",
+                        errorStyle: TextStyle(
+                          color: color1,
+                        ),
                       ),
+                      autocorrect: false,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: _shopcapacityEditingComplete,
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.07,
                     ),
@@ -491,38 +486,38 @@ class _HomePage1State extends State<HomePage1> {
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.04,
                     ),
-                     ElevatedButton(
-                       style: ElevatedButton.styleFrom(shape: new RoundedRectangleBorder(
-                         borderRadius: new BorderRadius.circular(12.0),
-                       ),),
-                       onPressed: (){
-                         _getUserLocation();
-                       },
-                       child: center==null?Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             Text("Add location",style:TextStyle(fontSize: 20)),
-                             Icon(Icons.location_pin,color: Colors.grey,),
-                           ],
-                         ),
-                       ):Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             Text("Location added",style:TextStyle(fontSize: 20)),
-                             SizedBox(width: 25,),
-                             Icon(Icons.location_pin,color: Colors.red,),
-                           ],
-                         ),
-                       ),
-                     ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(12.0),
+                      ),),
+                      onPressed: (){
+                        _getUserLocation();
+                      },
+                      child: center==null?Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Add location",style:TextStyle(fontSize: 20)),
+                            Icon(Icons.location_pin,color: Colors.grey,),
+                          ],
+                        ),
+                      ):Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Location added",style:TextStyle(fontSize: 20)),
+                            SizedBox(width: 25,),
+                            Icon(Icons.location_pin,color: Colors.red,),
+                          ],
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.04,
                     ),
-                     Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RaisedButton(
@@ -556,6 +551,7 @@ class _HomePage1State extends State<HomePage1> {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
     );
   }
 }
