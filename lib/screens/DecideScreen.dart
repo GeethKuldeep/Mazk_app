@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vibranium/screens/HomePage.dart';
 import 'package:vibranium/screens/Schedule.dart';
+import 'package:vibranium/screens/dashboard.dart';
 
 import 'Homepage1.dart';
 
@@ -16,6 +17,7 @@ var color1 = Color(0xff0050F5);
 var color2 = Color(0xff7BA3F6);
 final _auth = FirebaseAuth.instance;
 String user;
+bool present=false;
 
 
 
@@ -24,6 +26,7 @@ class _DecideState extends State<Decide> {
   @override
   void initState() {
     getdata();
+    verify1();
     super.initState();
   }
   getdata()async{
@@ -41,6 +44,65 @@ class _DecideState extends State<Decide> {
         });
       }
     });
+
+  }
+  verify1()async{
+    await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser.uid).get().then((user) {
+      if(user["Type"]=="Admin"){
+        FirebaseFirestore.instance.collection("Vendors").get().then((querySnapshot) {
+          querySnapshot.docs.forEach((result) {
+            FirebaseFirestore.instance
+                .collection("Vendors")
+                .doc("SRMT")
+                .collection("SRMT")
+                .get()
+                .then((querySnapshot) {
+              querySnapshot.docs.forEach((result) {
+                if(result["CreatedBY"] == _auth.currentUser.uid){
+                  print("PRESENT");
+                  print(result["StoreName"]);
+                  setState(() {
+                    present=true;
+                  });
+                }
+
+              });
+            });
+          });
+        });
+      }
+
+
+    });
+  }
+  verify()async{
+    await FirebaseFirestore.instance.collection("users").doc(_auth.currentUser.uid).get().then((user) {
+      if(user["Type"]=="Admin"){
+        FirebaseFirestore.instance.collection("Vendors").get().then((querySnapshot) {
+          querySnapshot.docs.forEach((result) {
+            FirebaseFirestore.instance
+                .collection("Vendors")
+                .doc("SRMT")
+                .collection("SRMT")
+                .get()
+                .then((querySnapshot) {
+              querySnapshot.docs.forEach((result) {
+                if(result["CreatedBY"] == _auth.currentUser.uid){
+                  print("PRESENT");
+                  print(result["StoreName"]);
+                  Navigator.of(context)
+                      .pushReplacement(MaterialPageRoute(builder: (context) => Dashboard()));
+                }
+
+              });
+            });
+          });
+        });
+      }
+
+
+    });
+
   }
 
   @override
@@ -72,21 +134,28 @@ class _DecideState extends State<Decide> {
               height: 45,
               child: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(color2),
+                    backgroundColor: MaterialStateProperty.all<Color>(color2),
                     shape:MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: color2)
-              )
-            ),
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: color2)
+                        )
+                    ),
                     //backgroundColor: color2, // background
                     //onPrimary: Colors.white, // foreground
                   ),
                   child: Text("Admin", style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     if(user=="Admin"){
-                      Navigator.of(context)
-                          .pushReplacement(MaterialPageRoute(builder: (context) => HomePage1()));
+                      if(present == true){
+                        verify();
+                      }
+                      if(present ==false){
+                        Navigator.of(context)
+                            .pushReplacement(MaterialPageRoute(builder: (context) => HomePage1()));
+                      }
+
+
                     }
                     else{
                       ScaffoldMessenger.of(context).showSnackBar(
