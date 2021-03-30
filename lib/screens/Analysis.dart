@@ -20,7 +20,7 @@ class Analysis extends StatefulWidget {
 
 class _AnalysisState extends State<Analysis> {
   var user;
-  String URL1;
+  String URL1="";
   Color final_color;
   var color1 =  Color(0xFFD50000);
   var color2 =  Color(0xFFFDDED5);
@@ -29,6 +29,12 @@ class _AnalysisState extends State<Analysis> {
   var color5 =  Color(0xFFF4592F);
   bool valuefirst = false;
   QueryDocumentSnapshot value1;
+  int user_current_strength=0;
+  String user_shopname="";
+  String user_Instruction1="";
+  String user_Instruction2="";
+  String user_safest_time="";
+  int user_total_strength =0;
 
 
 
@@ -39,7 +45,7 @@ class _AnalysisState extends State<Analysis> {
   @override
   void initState() {
 
-  getshopdata();
+    getshopdata();
 
     super.initState();
   }
@@ -59,7 +65,14 @@ class _AnalysisState extends State<Analysis> {
                 if(result["StoreName"]==widget.shop_name){
                   value1 =result;
                   user = result.data();
-                  print(user);
+                  user_current_strength=result["Current_strength"];
+                  print(user_current_strength);
+                  user_shopname=result["StoreName"];
+                  user_total_strength=result["Total_strength"];
+                  user_Instruction1=result["Instruction1"];
+                  user_Instruction2=result["Instruction2"];
+                  user_safest_time =result["Safest_time"];
+                  //print(user);
                 }
 
               });
@@ -102,26 +115,27 @@ class _AnalysisState extends State<Analysis> {
 
   @override
   Widget build(BuildContext context) {
-    if (user["Current_strength"] <=
-        user["Total_strength"] * 0.25) {
+    if (user_current_strength <= user_current_strength * 0.25) {
       final_color = Colors.lightGreenAccent;
     }
-    else if (user["Total_strength"] * 0.25 <
-        user["Current_strength"] &&
-        user["Current_strength"] <=
-            user["Total_strength"] * 0.75) {
+    else if (user_total_strength * 0.25 <
+        user_current_strength &&
+        user_current_strength <=
+            user_total_strength * 0.75) {
       final_color = Colors.orange;
     }
-    else if (user["Total_strength"] * 0.75 <
-        user["Current_strength"] &&
-        user["Current_strength"] <=
-            user["Total_strength"]) {
+    else if (user_total_strength * 0.75 <
+        user_current_strength &&
+        user_current_strength <=
+            user_total_strength) {
       final_color = color1;
     }
-    if(user["StoreName"]=="KFC")
+    if(user_shopname =="KFC")
       URL1 ="images/kfc.png";
-    else if(user["StoreName"]=="Nike")
+    else if(user_shopname=="Nike")
       URL1 ="images/nike1.png";
+    else if(user_shopname=="Jockey")
+      URL1 ="images/jockey1.png";
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -140,7 +154,7 @@ class _AnalysisState extends State<Analysis> {
                       backgroundImage: AssetImage(URL1),
                       radius: 40,
                     ),
-                    Text(user["StoreName"], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),),
+                    Text(user_shopname, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),),
                     Column(
                       children: [
                         Container(
@@ -156,7 +170,7 @@ class _AnalysisState extends State<Analysis> {
                           height: 10,
                         ),
                         Text(
-                            "${user["Current_strength"]}/${user["Total_strength"]}")
+                            "${user_current_strength}/${user_total_strength}")
                       ],
                     )
 
@@ -171,7 +185,7 @@ class _AnalysisState extends State<Analysis> {
                 width: MediaQuery.of(context).size.height*0.4,
                 decoration: BoxDecoration(
                     color: color2,
-                  borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: BorderRadius.all(Radius.circular(20))
                 ),
                 child:Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -179,9 +193,9 @@ class _AnalysisState extends State<Analysis> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("-${user["Instruction1"]}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                      Text("-${user_Instruction1}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
                       SizedBox(height: 5,),
-                      Text("-${user["Instruction2"]}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                      //Text("-${user_Instruction2}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
                     ],
                   ),
                 ),
@@ -191,7 +205,7 @@ class _AnalysisState extends State<Analysis> {
               SizedBox(height: 15,),
               Center(
                   child: Container(
-                    height: 280,
+                      height: 280,
                       child: SfCartesianChart(
                           backgroundColor: Colors.white,
                           primaryXAxis: CategoryAxis(),
@@ -199,31 +213,31 @@ class _AnalysisState extends State<Analysis> {
                           //legend: Legend(isVisible: true),
                           // Enable tooltip
                           tooltipBehavior: TooltipBehavior(
-                            header: "Crowd",
+                              header: "Crowd",
                               enable: true
                           ),
                           series: <LineSeries<SalesData, String>>[
                             LineSeries<SalesData, String>(
                               color: color5,
-                                width:3.5,
-                                dataSource:  <SalesData>[
-                                  SalesData('${user["Timings"][0]}', 35),
-                                  SalesData("10:30AM", 45),
-                                  SalesData("11:30AM", 55),
-                                  SalesData("12:30PM", 75),
-                                  SalesData("1:30PM", 15),
-                                  SalesData("2:30PM", 95),
-                                  SalesData("3:30PM", 105),
-                                  SalesData("4:30PM", 125),
-                                  SalesData("5:30PM", 25),
-                                  SalesData('${user["Timings"][1]}', 130),
+                              width:3.5,
+                              dataSource:  <SalesData>[
+                                //SalesData('${user["Timings"][0]}', 35),
+                                SalesData("10:30AM", 45),
+                                SalesData("11:30AM", 55),
+                                SalesData("12:30PM", 75),
+                                SalesData("1:30PM", 15),
+                                SalesData("2:30PM", 95),
+                                SalesData("3:30PM", 105),
+                                SalesData("4:30PM", 125),
+                                SalesData("5:30PM", 25),
+                                //SalesData('${user["Timings"][1]}', 130),
 
-                                ],
-                                xValueMapper: (SalesData sales, _) => sales.year,
-                                yValueMapper: (SalesData sales, _) => sales.sales,
+                              ],
+                              xValueMapper: (SalesData sales, _) => sales.year,
+                              yValueMapper: (SalesData sales, _) => sales.sales,
 
-                                // Enable data label
-                                //dataLabelSettings: DataLabelSettings(isVisible: true)
+                              // Enable data label
+                              //dataLabelSettings: DataLabelSettings(isVisible: true)
                             )
                           ]
                       )
@@ -233,9 +247,16 @@ class _AnalysisState extends State<Analysis> {
               Text("Best time to visit:",style: TextStyle(fontWeight: FontWeight.bold,color: color3,fontSize: 25),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("keeping your safety in mind and to ensure their is no compromise in your experience we have estimated that the ideal time for you to shop with us is 11:00 AM"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("keeping your safety in mind and to ensure their is no compromise in your experience we have estimated that the ideal time for you to shop with us is",style: TextStyle(color: Colors.black,fontSize: 13.55),),
+                    Text("1:30PM",style: TextStyle(color: color5,fontSize: 15,fontWeight: FontWeight.bold),),
+                  ],
+                ),
               ),
-              Text("Would you like to visit us today?",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 25),),
+              Text("Would you like to visit us today?",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 22),),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -262,7 +283,7 @@ class _AnalysisState extends State<Analysis> {
                                   'Added':"True"
                                 });
                               }
-                                else{
+                              else{
                                 FirebaseFirestore.instance.collection("Vendors").doc("SRMT").collection("SRMT").doc(value1.id).update({
                                   'Added':"False"
                                 });
@@ -288,9 +309,33 @@ class _AnalysisState extends State<Analysis> {
 
                       ],
                     ),
-                  SizedBox(height: 10,)
+                  SizedBox(height: 10,),
+
                 ],
               ),
+              SizedBox(
+                height: 35,
+                width: 125,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: color5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),// background
+                    ),
+
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Back",style: TextStyle(color: Colors.white,fontSize: 18),),
+                        Icon(Icons.subdirectory_arrow_left,color: Colors.white,)
+                      ],
+                    )),
+              ),
+
 
 
             ],
