@@ -310,304 +310,304 @@ class _EmailSigninPageState extends State<EmailSigninPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body:  Column(
-              children: [
-                SizedBox(
-                  height: 65,
+        children: [
+          SizedBox(
+            height: 65,
+          ),
+          Image.asset('images/1.png',scale: 0.7,),
+          SizedBox(
+            height:45,
+          ),
+          Text("Just a step away",style: TextStyle(color:Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.07,),
+          Expanded(
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
                 ),
-                Image.asset('images/1.png',scale: 0.7,),
-                SizedBox(
-                  height:45,
-                ),
-                Text("Just a step away",style: TextStyle(color:Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.07,),
-                Expanded(
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top:25.0,left:40,right: 40),
-                        child:Form(
-                          key: _formkey,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:25.0,left:40,right: 40),
+                  child:Form(
+                    key: _formkey,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          //Text("Just a step away",style: TextStyle(color:color3,fontSize: 25,fontWeight: FontWeight.bold),),
+                          //SizedBox(height: MediaQuery.of(context).size.width * 0.07,),
+                          if (_formType == EmailSignInFormType.register)
+                            TextFormField(
+                              style: TextStyle(color: Colors.black),
+                              cursorColor: Colors.black,
+                              key: ValueKey("UserName"),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Enter your Name';
+                                }
+                                return null;
+                              },
+                              controller: _UsernameController,
+                              focusNode: _UsernameFocusNode,
+                              decoration: InputDecoration(
+                                labelStyle: TextStyle(color: color1, fontSize: 13),
+                                contentPadding: const EdgeInsets.all(8.0),
+                                errorBorder: new OutlineInputBorder(
+                                  borderSide: new BorderSide(
+                                    color: color2,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: color5,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: color5,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                labelText: 'UserName',
+                                errorStyle: TextStyle(
+                                  color: color5,
+                                ),
+                              ),
+                              autocorrect: false,
+                              keyboardType: TextInputType.name,
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: _UsernameEditingComplete,
+                            ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.07,
+                          ),
+
+                          if (_formType == EmailSignInFormType.register)
+                            TextFormField(
+                              style: TextStyle(color: Colors.black),
+                              cursorColor: Colors.black,
+                              key: ValueKey("Type"),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Vendor or User?';
+                                }
+                                return null;
+                              },
+                              controller: _typeController,
+                              focusNode: _typeFocusNode,
+                              decoration: InputDecoration(
+                                labelStyle: TextStyle(color: color1, fontSize: 13),
+                                contentPadding: const EdgeInsets.all(8.0),
+                                errorBorder: new OutlineInputBorder(
+                                  borderSide: new BorderSide(
+                                    color: color2,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: color1,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: color1,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                labelText: 'Vendor or User',
+                                errorStyle: TextStyle(
+                                  color: color1,
+                                ),
+                              ),
+                              autocorrect: false,
+                              keyboardType: TextInputType.name,
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: _typeEditingComplete,
+                            ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.07,
+                          ),
+
+                          TextFormField(
+                            style: TextStyle(color: Colors.black),
+                            cursorColor: Colors.black,
+                            key: ValueKey("email"),
+                            validator: (value) {
+                              if (value.isEmpty || !value.contains('@')) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                            controller: _emailController,
+                            focusNode: _emailFocusNode,
+                            decoration: InputDecoration(
+                              labelStyle: TextStyle(color: color1, fontSize: 13),
+                              contentPadding: const EdgeInsets.all(8.0),
+                              errorBorder: new OutlineInputBorder(
+                                borderSide: new BorderSide(
+                                  color: color1,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: color1,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: color1,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              labelText: 'Email ID',
+                              errorStyle: TextStyle(
+                                color: color1,
+                              ),
+                            ),
+                            autocorrect: false,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: _emailEditingComplete,
+                          ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.07,
+                          ),
+
+                          TextFormField(
+                            style: TextStyle(color: Colors.black),
+                            cursorColor: Colors.black,
+                            key: ValueKey("password1"),
+                            validator: (value) {
+                              if (value.isEmpty || value.length < 7) {
+                                return 'Please enter atleast 7 characters';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              errorBorder: new OutlineInputBorder(
+                                borderSide: new BorderSide(
+                                  color: color1,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              labelStyle: TextStyle(color: color1, fontSize: 13),
+                              contentPadding: const EdgeInsets.all(8.0),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: color1,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: color1,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              labelText: 'Password',
+                              errorStyle: TextStyle(
+                                color: color1,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  // Based on passwordVisible state choose the icon
+                                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                  color: color1,
+                                ),
+                                onPressed: () {
+                                  // Update the state i.e. toogle the state of passwordVisible variable
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
+                            ),
+                            controller: _passwordController,
+                            focusNode: _password1FocusNode,
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: _submit,
+                            obscureText: !_passwordVisible,
+                          ),
+
+
+                          if (_formType == EmailSignInFormType.signIn)
+                            Row(
                               children: [
-                                //Text("Just a step away",style: TextStyle(color:color3,fontSize: 25,fontWeight: FontWeight.bold),),
-                                //SizedBox(height: MediaQuery.of(context).size.width * 0.07,),
-                                if (_formType == EmailSignInFormType.register)
-                                  TextFormField(
-                                    style: TextStyle(color: Colors.black),
-                                    cursorColor: Colors.black,
-                                    key: ValueKey("UserName"),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Enter your Name';
-                                      }
-                                      return null;
-                                    },
-                                    controller: _UsernameController,
-                                    focusNode: _UsernameFocusNode,
-                                    decoration: InputDecoration(
-                                      labelStyle: TextStyle(color: color1, fontSize: 13),
-                                      contentPadding: const EdgeInsets.all(8.0),
-                                      errorBorder: new OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                          color: color2,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: color5,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: color5,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      labelText: 'UserName',
-                                      errorStyle: TextStyle(
-                                        color: color5,
-                                      ),
-                                    ),
-                                    autocorrect: false,
-                                    keyboardType: TextInputType.name,
-                                    textInputAction: TextInputAction.next,
-                                    onEditingComplete: _UsernameEditingComplete,
-                                  ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.width * 0.07,
-                                ),
+                                FlatButton(
+                                  child: Text('Forgot password?',
+                                      style: TextStyle(color: color1)),
+                                  onPressed: () {
+                                    createAlertDialog(context).then((onValue){
+                                      print(onValue);
+                                      forgotpassword(onValue);
+                                    });
 
-                                if (_formType == EmailSignInFormType.register)
-                                  TextFormField(
-                                    style: TextStyle(color: Colors.black),
-                                    cursorColor: Colors.black,
-                                    key: ValueKey("Type"),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Vendor or User?';
-                                      }
-                                      return null;
-                                    },
-                                    controller: _typeController,
-                                    focusNode: _typeFocusNode,
-                                    decoration: InputDecoration(
-                                      labelStyle: TextStyle(color: color1, fontSize: 13),
-                                      contentPadding: const EdgeInsets.all(8.0),
-                                      errorBorder: new OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                          color: color2,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: color1,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: color1,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      labelText: 'Vendor or User',
-                                      errorStyle: TextStyle(
-                                        color: color1,
-                                      ),
-                                    ),
-                                    autocorrect: false,
-                                    keyboardType: TextInputType.name,
-                                    textInputAction: TextInputAction.next,
-                                    onEditingComplete: _typeEditingComplete,
-                                  ),
-
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.width * 0.07,
-                                ),
-
-                                TextFormField(
-                                  style: TextStyle(color: Colors.black),
-                                  cursorColor: Colors.black,
-                                  key: ValueKey("email"),
-                                  validator: (value) {
-                                    if (value.isEmpty || !value.contains('@')) {
-                                      return 'Please enter a valid email';
-                                    }
-                                    return null;
                                   },
-                                  controller: _emailController,
-                                  focusNode: _emailFocusNode,
-                                  decoration: InputDecoration(
-                                    labelStyle: TextStyle(color: color1, fontSize: 13),
-                                    contentPadding: const EdgeInsets.all(8.0),
-                                    errorBorder: new OutlineInputBorder(
-                                      borderSide: new BorderSide(
-                                        color: color1,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: color1,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: color1,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    labelText: 'Email ID',
-                                    errorStyle: TextStyle(
-                                      color: color1,
-                                    ),
-                                  ),
-                                  autocorrect: false,
-                                  keyboardType: TextInputType.emailAddress,
-                                  textInputAction: TextInputAction.next,
-                                  onEditingComplete: _emailEditingComplete,
-                                ),
-
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.width * 0.07,
-                                ),
-
-                                TextFormField(
-                                  style: TextStyle(color: Colors.black),
-                                  cursorColor: Colors.black,
-                                  key: ValueKey("password1"),
-                                  validator: (value) {
-                                    if (value.isEmpty || value.length < 7) {
-                                      return 'Please enter atleast 7 characters';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    errorBorder: new OutlineInputBorder(
-                                      borderSide: new BorderSide(
-                                        color: color1,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    labelStyle: TextStyle(color: color1, fontSize: 13),
-                                    contentPadding: const EdgeInsets.all(8.0),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: color1,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: color1,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    labelText: 'Password',
-                                    errorStyle: TextStyle(
-                                      color: color1,
-                                    ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        // Based on passwordVisible state choose the icon
-                                        _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                        color: color1,
-                                      ),
-                                      onPressed: () {
-                                        // Update the state i.e. toogle the state of passwordVisible variable
-                                        setState(() {
-                                          _passwordVisible = !_passwordVisible;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  controller: _passwordController,
-                                  focusNode: _password1FocusNode,
-                                  textInputAction: TextInputAction.done,
-                                  onEditingComplete: _submit,
-                                  obscureText: !_passwordVisible,
-                                ),
-
-
-                                if (_formType == EmailSignInFormType.signIn)
-                                  Row(
-                                    children: [
-                                      FlatButton(
-                                        child: Text('Forgot password?',
-                                        style: TextStyle(color: color1)),
-                                        onPressed: () {
-                                          createAlertDialog(context).then((onValue){
-                                            print(onValue);
-                                            forgotpassword(onValue);
-                                          });
-
-                                        },
-                                      ),
-                                    ],
-                                  ),
-
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.width * 0.04,
-                                ),
-
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    RaisedButton(
-                                        child: Text(primaryText,style: TextStyle(color: Colors.white,fontSize: 20),),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12.0),
-                                        ),
-                                        color: Colors.deepOrangeAccent,
-                                        onPressed: () {
-                                          if (_formkey.currentState.validate() == true) {
-                                            _submit();
-                                          }
-                                        }),
-                                    FlatButton(
-                                      child: Text(
-                                        secondaryText,
-                                        style: TextStyle(color: color1),
-                                      ),
-                                      onPressed: _toggleFormType,
-                                    ),
-                                  ],
-                                ),
-
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.width * 0.01,
                                 ),
                               ],
                             ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.04,
                           ),
-                        ),
-                      )
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RaisedButton(
+                                  child: Text(primaryText,style: TextStyle(color: Colors.white,fontSize: 20),),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  color: Colors.deepOrangeAccent,
+                                  onPressed: () {
+                                    if (_formkey.currentState.validate() == true) {
+                                      _submit();
+                                    }
+                                  }),
+                              FlatButton(
+                                child: Text(
+                                  secondaryText,
+                                  style: TextStyle(color: color1),
+                                ),
+                                onPressed: _toggleFormType,
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.01,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                )
             ),
+          ),
+        ],
+      ),
 
 
 
