@@ -24,14 +24,14 @@ class MyApp extends StatelessWidget {
     return  ChangeNotifierProvider(
       create: (context)=>Myschedule(),
       child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            initialRoute: SplashScreen.id ,
-            routes:{
-              LandingPage.id:(context)=> LandingPage(),
-              Decide.id:(context)=> Decide(),
-              SplashScreen.id:(context)=>SplashScreen(),
-              HomePage.id:(context)=> HomePage(),
-            }
+          debugShowCheckedModeBanner: false,
+          initialRoute: SplashScreen.id ,
+          routes:{
+            LandingPage.id:(context)=> LandingPage(),
+            Decide.id:(context)=> Decide(),
+            SplashScreen.id:(context)=>SplashScreen(),
+            HomePage.id:(context)=> HomePage(),
+          }
 
 
 
