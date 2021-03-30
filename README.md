@@ -17,14 +17,20 @@ This hardware will be integrated with our app which will indicate which places a
 - Embedded Systems
 
 
-## Screenshots
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/1.png" />
-
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/7.png" width="1920"/>
+## Design
+<img src=https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/1.png />
+Screenshots
 <p float="left">
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/2.jpeg" width="200"/>
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/3.jpeg" width="200"/>
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/4.jpeg" width="200"/>
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/5.jpeg" width="200"/>
+<img src=https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.47%20(1).jpeg width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.47%20(2).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.47%20(3).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.47.jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.48%20(1).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.48%20(2).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.48%20(3).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.48.jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.49%20(1).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.49%20(2).jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/WhatsApp%20Image%202021-03-28%20at%2020.06.49.jpeg"  width="200"/>
+<img src="https://github.com/Gaurav4604/Winhacks/blob/master/Screenshots/6.jpeg"  width="200"/>
 </p>
-<img src="https://github.com/GeethKuldeep/vibranium/blob/master/screenshots/6.jpeg" width="200"/>
